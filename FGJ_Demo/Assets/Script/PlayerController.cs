@@ -9,6 +9,8 @@ public class PlayerController : NetworkBehaviour
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 
+	public MeshRenderer selfTargetSign;
+
 	void Start()
     {
         
@@ -132,6 +134,8 @@ public class PlayerController : NetworkBehaviour
 	{
 		// self
 		this.transform.position += (Vector3.forward * netId.Value);
+
+		selfTargetSign.enabled = true;
 	}
 
 	[Command]
