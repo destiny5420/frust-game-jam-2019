@@ -45,24 +45,29 @@ public class PlayerController : NetworkBehaviour
 
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * playerMoveSpeed;
 		float z = Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed;
-
-		//// transform.Rotate(0, x, 0);
-		//transform.Translate(0, 0, z);
+		//if (Mathf.Abs(x) < 0.1f && Mathf.Abs(z) < 0.1f)
+		//{
+		//	playerMoveSpeed = playerStartMoveSpeed;
+		//}
 		transform.position += new Vector3(x, 0, z);
+		//if (playerMoveSpeed < playerMoveSpeedLimit)
+		//{
+		//	playerMoveSpeed += Time.deltaTime * 20.0f;
+		//}
 
 		if(Input.GetKey(KeyCode.KeypadPlus))
 		{
-			if (playerMoveSpeed < 10)
-				playerMoveSpeed += 0.1f;
+			if (playerMoveSpeedLimit < 20)
+				playerMoveSpeedLimit += 0.1f;
 			else
-				playerMoveSpeed = 10;
+				playerMoveSpeedLimit = 10;
 		}
 		if(Input.GetKey(KeyCode.KeypadMinus))
 		{
-			if (playerMoveSpeed > 0.1f)
-				playerMoveSpeed -= 0.1f;
+			if (playerMoveSpeedLimit > 0.1f)
+				playerMoveSpeedLimit -= 0.1f;
 			else
-				playerMoveSpeed = 0.1f;
+				playerMoveSpeedLimit = 0.1f;
 		}
 
 		if(Input.GetKeyDown(KeyCode.C))
@@ -95,7 +100,9 @@ public class PlayerController : NetworkBehaviour
 		}
 	}
 
+	float playerStartMoveSpeed = 3.0f;
 	float playerMoveSpeed = 10.0f;
+	float playerMoveSpeedLimit = 10.0f;
 	Vector3 mousePos;
 
 	void FollowMouse()
@@ -121,21 +128,6 @@ public class PlayerController : NetworkBehaviour
 		}
 	}
 
-	void Fire()
-	{
-		// Create the Bullet from the Bullet Prefab
-		GameObject bullet = (GameObject)Instantiate(
-			bulletPrefab,
-			bulletSpawn.position,
-			bulletSpawn.rotation);
-
-		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 500.0f;
-
-		// Destroy the bullet after 2 seconds
-		Destroy(bullet, 2.0f);
-	}
-
 	public override void OnStartLocalPlayer()
 	{
 		// self
@@ -152,7 +144,8 @@ public class PlayerController : NetworkBehaviour
 			bulletSpawn.rotation);
 
 		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20.0f;
+		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), this.GetComponent<Collider>());
 
 		// Spawn the bullet on the Clients
 		NetworkServer.Spawn(bullet);
