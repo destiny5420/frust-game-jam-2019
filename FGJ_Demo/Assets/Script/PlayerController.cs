@@ -43,15 +43,30 @@ public class PlayerController : NetworkBehaviour
 			CmdFire();
 		}
 
-		Debug.Log("Net ID:" + netId);
-		float x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-		float z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+		float x = Input.GetAxis("Horizontal") * Time.deltaTime * playerMoveSpeed;
+		float z = Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed;
 
-		// transform.Rotate(0, x, 0);
-		transform.Translate(0, 0, z);
+		//// transform.Rotate(0, x, 0);
+		//transform.Translate(0, 0, z);
+		transform.position += new Vector3(x, 0, z);
+
+		if(Input.GetKey(KeyCode.KeypadPlus))
+		{
+			if (playerMoveSpeed < 10)
+				playerMoveSpeed += 0.1f;
+			else
+				playerMoveSpeed = 10;
+		}
+		if(Input.GetKey(KeyCode.KeypadMinus))
+		{
+			if (playerMoveSpeed > 0.1f)
+				playerMoveSpeed -= 0.1f;
+			else
+				playerMoveSpeed = 0.1f;
+		}
 	}
 
-	public float speed;
+	float playerMoveSpeed = 3.0f;
 	Vector3 mousePos;
 
 	void FollowMouse()
