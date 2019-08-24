@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8800702151570381996}
   - component: {fileID: 4711581452636397538}
   - component: {fileID: 6197879155942803217}
-  - component: {fileID: 2656185515456611986}
   - component: {fileID: 8713757654241173016}
   m_Layer: 5
   m_Name: HealthCanvas
@@ -101,20 +100,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2656185515456611986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853941026871063702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e2fa9652491974db151d28ee7ed01d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 100
-  healthBar: {fileID: 3952044150608231581}
 --- !u!114 &8713757654241173016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,11 +252,11 @@ RectTransform:
   m_Father: {fileID: 4510566370112992442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 100, y: 10}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &199612465440049090
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -415,6 +400,7 @@ GameObject:
   - component: {fileID: 8482840576080085165}
   - component: {fileID: 16987710959283258}
   - component: {fileID: 2266973193198581682}
+  - component: {fileID: 4922177196199113144}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -543,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c95bb08c515e64eb3c1c680688f01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_camFollow: {fileID: 0}
   bulletPrefab: {fileID: 4497654511893094900, guid: 0cd2a74169eebc844bcf0ba3945a76d7,
     type: 3}
   bulletSpawn: {fileID: 5916272259968989522}
@@ -568,6 +555,20 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &4922177196199113144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647988011157177901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e2fa9652491974db151d28ee7ed01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  healthBar: {fileID: 3952044150608231581}
 --- !u!1 &8953864150917176676
 GameObject:
   m_ObjectHideFlags: 0

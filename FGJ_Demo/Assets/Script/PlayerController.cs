@@ -17,8 +17,6 @@ public class PlayerController : NetworkBehaviour
     // Update is called once per frame
     void Update()
 	{
-		FollowMouse();
-
 		switch (netId.Value)
 		{
 			case 1:
@@ -37,6 +35,8 @@ public class PlayerController : NetworkBehaviour
 
 		if (!isLocalPlayer)
 			return;
+
+		FollowMouse();
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -83,14 +83,19 @@ public class PlayerController : NetworkBehaviour
 	{
 		if(bJump == true)
 		{
-			fJumpTime += Time.deltaTime;
-			transform.position += new Vector3(0, Time.deltaTime * 20.0f, 0);
 			if (fJumpLimitTime < fJumpTime)
-				bJump = false;
+			{
+				transform.position -= new Vector3(0, Time.deltaTime * 20.0f, 0);
+			}
+			else
+			{
+				fJumpTime += Time.deltaTime;
+				transform.position += new Vector3(0, Time.deltaTime * 20.0f, 0);
+			}
 		}
 	}
 
-	float playerMoveSpeed = 3.0f;
+	float playerMoveSpeed = 10.0f;
 	Vector3 mousePos;
 
 	void FollowMouse()
@@ -125,7 +130,7 @@ public class PlayerController : NetworkBehaviour
 			bulletSpawn.rotation);
 
 		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 500.0f;
 
 		// Destroy the bullet after 2 seconds
 		Destroy(bullet, 2.0f);
@@ -154,5 +159,20 @@ public class PlayerController : NetworkBehaviour
 
 		// Destroy the bullet after 2 seconds
 		Destroy(bullet, 2.0f);
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		Debug.Log("OnTriggerEnter");
+		ResetJump();
+	}
+
+	void ResetJump()
+	{
+		if(bJump == true)
+		{
+			bJump = false;
+			fJumpTime = 0.0f;
+		}
 	}
 }

@@ -19,7 +19,7 @@ public class bullet : MonoBehaviour
 	void OnCollisionEnter(Collision collision)
 	{
 		GameObject hit = collision.gameObject;
-		health hp = hit.GetComponent<health>();
+		Health hp = hit.GetComponent<Health>();
 		if (hp != null)
 		{
 			hp.TakeDamage(10);
