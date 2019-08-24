@@ -64,6 +64,30 @@ public class PlayerController : NetworkBehaviour
 			else
 				playerMoveSpeed = 0.1f;
 		}
+
+		if(Input.GetKeyDown(KeyCode.C))
+		{
+			if(bJump == false)
+			{
+				bJump = true;
+			}
+		}
+		JumpBehavior();
+	}
+
+	bool bJump = false;
+	float fJumpTime = 0.0f;
+	float fJumpLimitTime = 0.3f;
+
+	void JumpBehavior()
+	{
+		if(bJump == true)
+		{
+			fJumpTime += Time.deltaTime;
+			transform.position += new Vector3(0, Time.deltaTime * 20.0f, 0);
+			if (fJumpLimitTime < fJumpTime)
+				bJump = false;
+		}
 	}
 
 	float playerMoveSpeed = 3.0f;
