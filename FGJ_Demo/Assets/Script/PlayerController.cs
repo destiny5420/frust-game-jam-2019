@@ -8,9 +8,10 @@ public class PlayerController : NetworkBehaviour
 	public Camera m_camFollow;
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
-
+	public Transform m_tranMouse;
+	public MouseController m_clsMouseController;
 	public MeshRenderer selfTargetSign;
-
+	Vector3 m_v3CurMouseHitPoint;
 	Health m_Health;
 
 	public bool bBoss = false;
@@ -76,6 +77,17 @@ public class PlayerController : NetworkBehaviour
 				bJump = true;
 			}
 		}
+		
+		if (Input.GetKeyDown(KeyCode.F1))
+		{
+			PrefabManager.Instance.SpawnMagic(PrefabManager.MAGIC_TYPE.Magic01, m_v3CurMouseHitPoint);
+		}
+
+		if (Input.GetKeyDown(KeyCode.F2))
+		{
+			PrefabManager.Instance.SpawnMagic(PrefabManager.MAGIC_TYPE.Health01, m_v3CurMouseHitPoint);
+		}
+
 		JumpBehavior();
 
 		if(Input.GetKeyDown(KeyCode.F9))
@@ -124,7 +136,10 @@ public class PlayerController : NetworkBehaviour
 
 		if(Physics.Raycast (camRay, out floorHit, 1000, floorMask))
 		{
+			m_v3CurMouseHitPoint = floorHit.point;
 			Vector3 playerToMouse = floorHit.point - transform.position;
+			
+			SetPosToHitPointByMouse(m_v3CurMouseHitPoint);
 			//Debug.Log("Hit point: " + floorHit.point + " / transform.position: " + transform.position + " / Result: " + playerToMouse);
 			playerToMouse.y = 0;
 
@@ -132,6 +147,11 @@ public class PlayerController : NetworkBehaviour
 
 			transform.rotation = rot;
 		}
+	}
+
+	void SetPosToHitPointByMouse(Vector3 v_pos)
+	{
+		m_tranMouse.position = v_pos;
 	}
 
 	public override void OnStartLocalPlayer()
