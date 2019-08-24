@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PrefabManager : MonoBehaviour
+public class PrefabManager : NetworkBehaviour
 {
     public enum MAGIC_TYPE
     {
@@ -32,28 +33,34 @@ public class PrefabManager : MonoBehaviour
         instance = this;
     }
 
-    public void SpawnMagic(MAGIC_TYPE v_type, Vector3 v_pos)
+	[Command]
+	public void CmdSpawnMagic(MAGIC_TYPE v_type, Vector3 v_pos)
     {
-        switch (v_type)
+		GameObject temp = null;
+
+		switch (v_type)
         {
             case MAGIC_TYPE.Magic01:
-                GameObject.Instantiate(m_objMagic01, v_pos, Quaternion.identity);
-                break;
+				temp = (GameObject)Instantiate(m_objMagic01, v_pos, Quaternion.identity);
+				break;
             case MAGIC_TYPE.Magic02:
                 break;
             case MAGIC_TYPE.Magic03:
                 break;
             case MAGIC_TYPE.Health01:
-                GameObject.Instantiate(m_objHealth01, v_pos, Quaternion.identity);
+				temp = (GameObject)Instantiate(m_objHealth01, v_pos, Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health02:
-                GameObject.Instantiate(m_objHealth02, v_pos, Quaternion.identity);
+				temp = (GameObject)Instantiate(m_objHealth02, v_pos, Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health03:
-                GameObject.Instantiate(m_objHealth03, v_pos, Quaternion.identity);
+				temp = (GameObject)Instantiate(m_objHealth03, v_pos, Quaternion.identity);
                 break;
             default:
                 break;
-        }
-    }
+		}
+
+		if(temp != null)
+			NetworkServer.Spawn(temp);
+	}
 }

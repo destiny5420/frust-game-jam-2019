@@ -16,6 +16,9 @@ public class PlayerController : NetworkBehaviour
 
 	public bool bBoss = false;
 
+	public GameObject particlePrefab;
+	public Transform particleSpawn;
+
 	void Start()
     {
 		m_Health = this.GetComponent<Health>();
@@ -100,12 +103,12 @@ public class PlayerController : NetworkBehaviour
 		
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
-			PrefabManager.Instance.SpawnMagic(PrefabManager.MAGIC_TYPE.Magic01, m_v3CurMouseHitPoint);
+			PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Magic01, m_v3CurMouseHitPoint);
 		}
 
 		if (Input.GetKeyDown(KeyCode.F2))
 		{
-			PrefabManager.Instance.SpawnMagic(PrefabManager.MAGIC_TYPE.Health01, m_v3CurMouseHitPoint);
+			PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Health01, m_v3CurMouseHitPoint);
 		}
 
 		JumpBehavior();
