@@ -103,6 +103,11 @@ public class PlayerController : NetworkBehaviour
 			PrefabManager.Instance.SpawnMagic(PrefabManager.MAGIC_TYPE.Magic01, m_v3CurMouseHitPoint);
 		}
 
+		if (Input.GetKeyDown(KeyCode.F2))
+		{
+			PrefabManager.Instance.SpawnMagic(PrefabManager.MAGIC_TYPE.Health01, m_v3CurMouseHitPoint);
+		}
+
 		JumpBehavior();
 
 		if(Input.GetKeyDown(KeyCode.F9))
