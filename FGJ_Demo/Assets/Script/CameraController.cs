@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] PlayerController m_clsPlayerController;
-    Vector3 m_v3CameraDisWithPlayer = new Vector3(0.0f, 5.5f, -7.0f);
+    Vector3 m_v3CameraDisWithPlayer = new Vector3(0.0f, 16.0f, -4.0f);
 
     void Start()
     {
@@ -49,6 +49,6 @@ public class CameraController : MonoBehaviour
             return;
 
         gameObject.transform.position = m_clsPlayerController.transform.position + m_v3CameraDisWithPlayer;
-        gameObject.transform.rotation = Quaternion.Euler(new Vector3(30.0f, 0.0f, 0.0f));
+        gameObject.transform.rotation = Quaternion.Euler(new Vector3(72.0f, 0.0f, 0.0f));
     }
 }
