@@ -11,6 +11,8 @@ public class PlayerController : NetworkBehaviour
 
 	public MeshRenderer selfTargetSign;
 
+	public bool bBoss = false;
+
 	void Start()
     {
         
@@ -149,6 +151,7 @@ public class PlayerController : NetworkBehaviour
 
 		// Add velocity to the bullet
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20.0f;
+		bullet.GetComponent<bullet>().player = this;
 		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), this.GetComponent<Collider>());
 
 		// Spawn the bullet on the Clients
