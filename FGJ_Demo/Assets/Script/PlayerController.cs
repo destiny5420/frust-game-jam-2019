@@ -8,7 +8,8 @@ public class PlayerController : NetworkBehaviour
 	public Camera m_camFollow;
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
-
+	public Transform m_tranMouse;
+	public MouseController m_clsMouseController;
 	public MeshRenderer selfTargetSign;
 
 	Health m_Health;
@@ -125,6 +126,7 @@ public class PlayerController : NetworkBehaviour
 		if(Physics.Raycast (camRay, out floorHit, 1000, floorMask))
 		{
 			Vector3 playerToMouse = floorHit.point - transform.position;
+			SetPosToHitPointByMouse(floorHit.point);
 			//Debug.Log("Hit point: " + floorHit.point + " / transform.position: " + transform.position + " / Result: " + playerToMouse);
 			playerToMouse.y = 0;
 
@@ -132,6 +134,11 @@ public class PlayerController : NetworkBehaviour
 
 			transform.rotation = rot;
 		}
+	}
+
+	void SetPosToHitPointByMouse(Vector3 v_pos)
+	{
+		m_tranMouse.position = v_pos;
 	}
 
 	public override void OnStartLocalPlayer()
