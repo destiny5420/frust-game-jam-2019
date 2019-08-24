@@ -83,9 +83,12 @@ public class PlayerController : NetworkBehaviour
 		if(Physics.Raycast (camRay, out floorHit, 1000, floorMask))
 		{
 			Vector3 playerToMouse = floorHit.point - transform.position;
+			//Debug.Log("Hit point: " + floorHit.point + " / transform.position: " + transform.position + " / Result: " + playerToMouse);
+			playerToMouse.y = 0;
 
-			playerToMouse.y = transform.position.y;
-			transform.LookAt(playerToMouse);
+			Quaternion rot = Quaternion.LookRotation(playerToMouse, Vector3.zero);
+
+			transform.rotation = rot;
 		}
 	}
 
