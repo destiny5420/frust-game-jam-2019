@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class bullet : MonoBehaviour
+public class bullet : NetworkTransform
 {
-	public PlayerController player;
+	[SyncVar]
+	public int playerID;
+	[SyncVar]
+	public bool bBoss;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -23,7 +27,7 @@ public class bullet : MonoBehaviour
 		Health hp = hit.GetComponent<Health>();
 		if (hp != null)
 		{
-			if(player.bBoss == true)
+			if(bBoss == true)
 			{
 				hp.TakeDamage(20);
 			}

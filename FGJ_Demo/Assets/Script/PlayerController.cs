@@ -11,33 +11,28 @@ public class PlayerController : NetworkBehaviour
 
 	public MeshRenderer selfTargetSign;
 
+	Health m_Health;
+
 	public bool bBoss = false;
 
 	void Start()
     {
-        
-    }
+		m_Health = this.GetComponent<Health>();
+	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
 	{
-		switch (netId.Value)
+		if (!isLocalPlayer)
+			return;
+
+		if(Input.GetKeyDown(KeyCode.R))
 		{
-			case 1:
-				GetComponent<MeshRenderer>().material.color = Color.blue;
-				break;
-			case 2:
-				GetComponent<MeshRenderer>().material.color = Color.red;
-				break;
-			case 3:
-				GetComponent<MeshRenderer>().material.color = Color.green;
-				break;
-			case 4:
-				GetComponent<MeshRenderer>().material.color = Color.white;
-				break;
+			m_Health.currentHealth = 100;
+			return;
 		}
 
-		if (!isLocalPlayer)
+		if (m_Health.currentHealth <= 0)
 			return;
 
 		FollowMouse();
@@ -82,6 +77,13 @@ public class PlayerController : NetworkBehaviour
 			}
 		}
 		JumpBehavior();
+
+		if(Input.GetKeyDown(KeyCode.F9))
+		{
+			bBoss = true;
+			GameSetting.bBossMode = true;
+			GetComponent<MeshRenderer>().material.color = Color.red;
+		}
 	}
 
 	bool bJump = false;
@@ -138,6 +140,23 @@ public class PlayerController : NetworkBehaviour
 		this.transform.position += (Vector3.forward * netId.Value);
 
 		selfTargetSign.enabled = true;
+
+		switch (netId.Value)
+		{
+			case 1:
+				GetComponent<MeshRenderer>().material.color = Color.blue;
+				break;
+			case 2:
+				GetComponent<MeshRenderer>().material.color = new Color(160.0f / 255.0f, 32.0f / 255.0f, 240.0f / 255.0f);
+				break;
+			case 3:
+				GetComponent<MeshRenderer>().material.color = Color.green;
+				break;
+			case 4:
+				GetComponent<MeshRenderer>().material.color = Color.white;
+				break;
+		}
+
 	}
 
 	[Command]
@@ -151,7 +170,8 @@ public class PlayerController : NetworkBehaviour
 
 		// Add velocity to the bullet
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20.0f;
-		bullet.GetComponent<bullet>().player = this;
+		bullet.GetComponent<bullet>().playerID = (int)netId.Value;
+		bullet.GetComponent<bullet>().bBoss = bBoss;
 		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), this.GetComponent<Collider>());
 
 		// Spawn the bullet on the Clients
