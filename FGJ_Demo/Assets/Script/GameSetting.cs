@@ -5,4 +5,5 @@ using UnityEngine;
 public static class GameSetting
 {
 	public static bool bFriendlyDamage = false;
+	public static bool bBossMode = false;
 }
