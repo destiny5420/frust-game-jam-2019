@@ -5,11 +5,10 @@ using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour
 {
-
+	public Camera m_camFollow;
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 
-	// Start is called before the first frame update
 	void Start()
     {
         
@@ -18,6 +17,8 @@ public class PlayerController : NetworkBehaviour
     // Update is called once per frame
     void Update()
 	{
+		FollowMouse();
+
 		switch (netId.Value)
 		{
 			case 1:
@@ -46,8 +47,31 @@ public class PlayerController : NetworkBehaviour
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
 		float z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
 
-		transform.Rotate(0, x, 0);
+		// transform.Rotate(0, x, 0);
 		transform.Translate(0, 0, z);
+	}
+
+	public float speed;
+	Vector3 mousePos;
+
+	void FollowMouse()
+	{
+		if (m_camFollow == null)
+			return;
+
+		Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+
+		RaycastHit floorHit;
+		
+		LayerMask floorMask = 1<< 9;
+
+		if(Physics.Raycast (camRay, out floorHit, 1000, floorMask))
+		{
+			Vector3 playerToMouse = floorHit.point - transform.position;
+
+			playerToMouse.y = transform.position.y;
+			transform.LookAt(playerToMouse);
+		}
 	}
 
 	void Fire()

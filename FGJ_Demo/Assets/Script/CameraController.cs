@@ -32,6 +32,7 @@ public class CameraController : MonoBehaviour
             if (player.isLocalPlayer == true)
             {
                 m_clsPlayerController = (PlayerController)player;
+                m_clsPlayerController.m_camFollow = GetComponent<Camera>();
                 break;
             }
         }
