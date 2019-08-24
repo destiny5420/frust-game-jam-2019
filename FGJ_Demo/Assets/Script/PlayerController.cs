@@ -39,7 +39,7 @@ public class PlayerController : NetworkBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			Fire();
+			CmdFire();
 		}
 
 		Debug.Log("Net ID:" + netId);
