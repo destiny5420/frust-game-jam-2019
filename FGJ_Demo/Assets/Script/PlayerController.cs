@@ -205,6 +205,9 @@ public class PlayerController : NetworkBehaviour
 			else if (weapon == 4 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("Drink");
+				m_Health.currentHealth += 50;
+				if (m_Health.currentHealth > 100)
+					m_Health.currentHealth = 100;
 			}
 			else
 			{
