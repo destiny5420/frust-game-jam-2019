@@ -55,7 +55,8 @@ MonoBehaviour:
     type: 3}
   m_objHealth01: {fileID: 8149810653398289184, guid: cad623298669546f7a7548ad247a80d3,
     type: 3}
-  m_objHealth02: {fileID: 0}
+  m_objHealth02: {fileID: 2327159950717871470, guid: 5594041f591ce4b288bf2e019685e6ce,
+    type: 3}
   m_objHealth03: {fileID: 0}
 --- !u!114 &3159094264511513835
 MonoBehaviour:

@@ -423,7 +423,6 @@ public class PlayerController : NetworkBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("OnTriggerEnter");
 		if (other.tag != "Floor")
 			return;
 		ResetJump();

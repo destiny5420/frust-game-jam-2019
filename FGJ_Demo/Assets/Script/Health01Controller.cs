@@ -20,9 +20,6 @@ public class Health01Controller : MonoBehaviour
     {
         if (other.tag == "Well" || other.tag == "Player")
         {
-            Debug.Log("Hit " + other.gameObject.name);
-
-
 			Health hp = other.GetComponent<Health>();
 			if (hp != null)
 			{
@@ -30,11 +27,21 @@ public class Health01Controller : MonoBehaviour
 				if (hp.currentHealth > 100)
 					hp.currentHealth = 100;
 			}
+
+            if (other.tag == "Player")
+            {
+                PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+                data.magicType = PrefabManager.MAGIC_TYPE.Health02;
+                data.targetPos = transform.position;
+                PrefabManager.Instance.CmdSpawnMagic(data);
+            }
 				//         PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
 				//data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
 				//data.targetPos = transform.position;
 				//         PrefabManager.Instance.CmdSpawnMagic(data);
 				Destroy(gameObject);
         }
+
+        
     }
 }
