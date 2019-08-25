@@ -129,6 +129,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_clsPlayerController: {fileID: 0}
+  frequency: 25
+  maximumTranslationShake: {x: 0.5, y: 0.5, z: 0.5}
+  maximumAngularShake: {x: 2, y: 2, z: 2}
+  recoverySpeed: 0.5
+  traumaExponent: 2
 --- !u!114 &4201231291489361189
 MonoBehaviour:
   m_ObjectHideFlags: 0

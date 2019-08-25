@@ -73,8 +73,11 @@ public class PrefabManager : NetworkBehaviour
                 m_fMagicCDClick = 0.0f;
 				break;
             case MAGIC_TYPE.Magic02:
+                temp = (GameObject)Instantiate(m_objMagic02, v_data.targetPos, Quaternion.identity);    
                 break;
             case MAGIC_TYPE.Magic03:
+                temp = (GameObject)Instantiate(m_objMagic03, v_data.targetPos + new Vector3(0.0f, 50.0f, 0.0f), Quaternion.identity);  
+                temp.GetComponent<Magic01Controller>().SetSpeed(5.0f);  
                 break;
             case MAGIC_TYPE.Magic01Hit:  
                 temp = (GameObject)Instantiate(m_objMagic01_Hit, v_data.targetPos , Quaternion.identity);

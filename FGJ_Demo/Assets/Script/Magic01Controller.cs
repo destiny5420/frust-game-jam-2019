@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class Magic01Controller : NetworkTransform
 {
-    float m_fSpeedUnit = 10.0f;
+    float m_fSpeedUnit = 15.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +16,11 @@ public class Magic01Controller : NetworkTransform
     void Update()
     {
         transform.Translate(Vector3.down * Time.deltaTime * m_fSpeedUnit);
+    }
+
+    public void SetSpeed(float v_value)
+    {
+        m_fSpeedUnit = v_value;
     }
 
     void OnTriggerEnter(Collider other)
@@ -29,6 +34,14 @@ public class Magic01Controller : NetworkTransform
 			data.targetPos = transform.position;
 
             PrefabManager.Instance.CmdSpawnMagic(data);
+
+            PrefabManager.udsPrefabData data2 = new PrefabManager.udsPrefabData();
+			data2.magicType = PrefabManager.MAGIC_TYPE.Magic02;
+			data2.targetPos = transform.position;
+
+            CameraController.Instance.InduceStress(1.0f);
+
+            PrefabManager.Instance.CmdSpawnMagic(data2);
             Destroy(gameObject);
         }
     }

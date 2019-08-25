@@ -18,8 +18,15 @@ public class CameraController : MonoBehaviour
     private float seed;
     [SerializeField] float traumaExponent = 2;
 
+    static CameraController instance;
+    public static CameraController Instance
+    {
+        get{ return instance; }
+    }
+
     private void Awake()
     {
+        instance = this;
         seed = Random.value;
     }
 
@@ -31,7 +38,6 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         FindPlayerTarget();
-        CamerShakeUpdate();
     }
 
     void CamerShakeUpdate()
@@ -45,17 +51,19 @@ public class CameraController : MonoBehaviour
         float shake = Mathf.Pow(trauma, traumaExponent);
 
         // Modify the existing code.
-        transform.localPosition = new Vector3(
+        Vector3 v3ExtraPos = new Vector3(
             maximumTranslationShake.x * (Mathf.PerlinNoise(seed, Time.time * frequency) * 2 - 1),
             maximumTranslationShake.y * (Mathf.PerlinNoise(seed + 1, Time.time * frequency) * 2 - 1),
             maximumTranslationShake.z * (Mathf.PerlinNoise(seed + 2, Time.time * frequency) * 2 - 1)
         ) * shake;
 
-        transform.localRotation = Quaternion.Euler(new Vector3(
-            maximumAngularShake.x * (Mathf.PerlinNoise(seed + 3, Time.time * frequency) * 2 - 1),
-            maximumAngularShake.y * (Mathf.PerlinNoise(seed + 4, Time.time * frequency) * 2 - 1),
-            maximumAngularShake.z * (Mathf.PerlinNoise(seed + 5, Time.time * frequency) * 2 - 1)
-        ) * shake);
+        transform.position += v3ExtraPos;
+        trauma = Mathf.Clamp01(trauma - recoverySpeed * Time.deltaTime);
+        // transform.localRotation = Quaternion.Euler(new Vector3(
+        //     maximumAngularShake.x * (Mathf.PerlinNoise(seed + 3, Time.time * frequency) * 2 - 1),
+        //     maximumAngularShake.y * (Mathf.PerlinNoise(seed + 4, Time.time * frequency) * 2 - 1),
+        //     maximumAngularShake.z * (Mathf.PerlinNoise(seed + 5, Time.time * frequency) * 2 - 1)
+        // ) * shake);
     }
 
     public void InduceStress(float stress)
@@ -86,6 +94,7 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         CameraFollow();
+        CamerShakeUpdate();
     }
 
     void CameraFollow()

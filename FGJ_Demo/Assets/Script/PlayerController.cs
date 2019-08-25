@@ -9,7 +9,6 @@ public class PlayerController : NetworkBehaviour
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	public Transform m_tranMouse;
-	public MouseController m_clsMouseController;
 	public MeshRenderer selfTargetSign;
 	Vector3 m_v3CurMouseHitPoint;
 	Health m_Health;
@@ -46,9 +45,11 @@ public class PlayerController : NetworkBehaviour
 		Drink.SetActive(false);
 
 		m_Attritube.m_dead = DeadStart;
+
+		if (isLocalPlayer == false)
+			selfTargetSign.enabled = false;
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		if(bDie == false)
@@ -160,6 +161,14 @@ public class PlayerController : NetworkBehaviour
 			data.forward = transform.forward;
 			data.startPos = transform.position;
 
+			PrefabManager.Instance.CmdSpawnMagic(data);
+		}
+
+		if (Input.GetKeyDown(KeyCode.F3))
+		{
+			PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+			data.magicType = PrefabManager.MAGIC_TYPE.Magic03;
+			data.targetPos = m_v3CurMouseHitPoint;
 			PrefabManager.Instance.CmdSpawnMagic(data);
 		}
 

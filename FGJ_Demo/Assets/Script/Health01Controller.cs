@@ -8,7 +8,7 @@ public class Health01Controller : MonoBehaviour
 
     void Start()
     {
-        
+        Destroy(gameObject, 10.0f);
     }
 
     void Update()
@@ -28,10 +28,5 @@ public class Health01Controller : MonoBehaviour
             PrefabManager.Instance.CmdSpawnMagic(data);
             Destroy(gameObject);
         }
-    }
-
-    void SettingConfigure()
-    {
-
     }
 }
