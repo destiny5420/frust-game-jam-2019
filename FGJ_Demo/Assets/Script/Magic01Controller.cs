@@ -17,6 +17,11 @@ public class Magic01Controller : MonoBehaviour
         transform.Translate(Vector3.down * Time.deltaTime * m_fSpeedUnit);
     }
 
+    public void SetSpeed(float v_value)
+    {
+        m_fSpeedUnit = v_value;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Floor")

@@ -146,13 +146,13 @@ public class PlayerController : NetworkBehaviour
 			PrefabManager.Instance.CmdSpawnMagic(data);
 		}
 
-		// if (Input.GetKeyDown(KeyCode.F3))
-		// {
-		// 	PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
-		// 	data.magicType = PrefabManager.MAGIC_TYPE.Magic02;
-		// 	data.targetPos = m_v3CurMouseHitPoint;
-		// 	PrefabManager.Instance.CmdSpawnMagic(data);
-		// }
+		if (Input.GetKeyDown(KeyCode.F3))
+		{
+			PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+			data.magicType = PrefabManager.MAGIC_TYPE.Magic03;
+			data.targetPos = m_v3CurMouseHitPoint;
+			PrefabManager.Instance.CmdSpawnMagic(data);
+		}
 
 		JumpBehavior();
 
