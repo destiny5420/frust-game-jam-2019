@@ -725,6 +725,8 @@ MonoBehaviour:
   m_clsMouseController: {fileID: 0}
   selfTargetSign: {fileID: 7642351615437336491}
   bBoss: 0
+  particlePrefab: {fileID: 0}
+  particleSpawn: {fileID: 0}
 --- !u!114 &2266973193198581682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.1
+  m_SendInterval: 0.033333335
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
