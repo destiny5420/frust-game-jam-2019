@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Magic01Controller : MonoBehaviour
+public class Magic01Controller : NetworkTransform
 {
     float m_fSpeedUnit = 10.0f;
     // Start is called before the first frame update

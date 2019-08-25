@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 258f2f0696b19c24993922a07cc0005c
+guid: 04d9483d12720dd4fb9cbd692616b80a
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -112,7 +112,7 @@ ModelImporter:
     4300020: pSphere7
     4300022: pSphere8
     4300024: pSphere9
-    7400000: Magic Heal
+    7400000: Drinking
     9500000: //RootNode
     13700000: pCone1
     13700002: pCube1
@@ -156,10 +156,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Magic Heal
+      name: Drinking
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 80
+      lastFrame: 266
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -171,28 +171,14 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: AttackStart
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: AttackEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

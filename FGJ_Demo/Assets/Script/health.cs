@@ -24,6 +24,7 @@ public class Health : NetworkBehaviour
 		if (currentHealth <= 0)
 		{
 			currentHealth = 0;
+			//Ani.SetBool("Dead", true);
 			Debug.LogError("Dead!!!");
 		}
 	}

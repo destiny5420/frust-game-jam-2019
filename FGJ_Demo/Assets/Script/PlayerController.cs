@@ -22,12 +22,18 @@ public class PlayerController : NetworkBehaviour
 	// model
 	public GameObject Sword;
 	public GameObject Staff;
+	public GameObject Gun;
+	public GameObject Drink;
 	public Animator Ani;
 	public float weapon;
 	public bool running;
 
 	public Material[] m_mat;
 	public SkinnedMeshRenderer renderer;
+
+	bool bDie = false;
+
+	public Attritube m_Attritube;
 
 	void Start()
     {
@@ -36,11 +42,23 @@ public class PlayerController : NetworkBehaviour
 		// model
 		Sword.SetActive(false);
 		Staff.SetActive(false);
+		Gun.SetActive(false);
+		Drink.SetActive(false);
+
+		m_Attritube.m_dead = DeadStart;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if(bDie == false)
+		{
+			if(m_Health.currentHealth <= 0)
+			{
+				Ani.SetBool("Dead", true);
+				bDie = true;
+			}
+		}
 
 		if(bBoss != true)
 		{
@@ -158,13 +176,21 @@ public class PlayerController : NetworkBehaviour
 
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (weapon == 1)
+			if (weapon == 1 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("Attack");
 			}
-			else if (weapon == 2)
+			else if (weapon == 2 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("MagicAttack");
+			}
+			else if (weapon == 3 && m_Attritube.IsAttack == false)
+			{
+				Ani.SetTrigger("GunAttack");
+			}
+			else if (weapon == 4 && m_Attritube.IsAttack == false)
+			{
+				Ani.SetTrigger("Drink");
 			}
 			else
 			{
@@ -182,6 +208,8 @@ public class PlayerController : NetworkBehaviour
 			Ani.SetBool("HaveWeapon", true);
 			Sword.SetActive(true);
 			Staff.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(false);
 
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -191,6 +219,28 @@ public class PlayerController : NetworkBehaviour
 			Ani.SetBool("HaveWeapon", true);
 			Staff.SetActive(true);
 			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(false);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			weapon = 3;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", true);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+			Gun.SetActive(true);
+			Drink.SetActive(false);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			weapon = 4;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", true);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(true);
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha0))
 		{
@@ -199,6 +249,8 @@ public class PlayerController : NetworkBehaviour
 			Ani.SetBool("HaveWeapon", false);
 			Staff.SetActive(false);
 			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(false);
 		}
 		
 		if (Input.GetMouseButtonDown(0) && weapon == 1)
@@ -208,6 +260,14 @@ public class PlayerController : NetworkBehaviour
 		if (Input.GetMouseButtonDown(0) && weapon == 2)
 		{
 			Ani.SetTrigger("MagicAttack");
+		}
+		if (Input.GetMouseButtonDown(0) && weapon == 3)
+		{
+			Ani.SetTrigger("GunAttack");
+		}
+		if (Input.GetMouseButtonDown(0) && weapon == 4)
+		{
+			Ani.SetTrigger("Drink");
 		}
 
 		if (running)
@@ -341,4 +401,12 @@ public class PlayerController : NetworkBehaviour
 			fJumpTime = 0.0f;
 		}
 	}
+	
+	public delegate void deadFunc();
+
+	public void DeadStart()
+	{
+		Ani.SetBool("Dead", false);
+	}
+
 }
