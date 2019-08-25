@@ -5,6 +5,14 @@ using UnityEngine.Networking;
 
 public class PrefabManager : NetworkBehaviour
 {
+    public struct udsPrefabData
+    {
+        public MAGIC_TYPE magicType;
+        public Vector3 targetPos;
+        public Vector3 forward;
+        public Vector3 startPos;
+    }
+
     public enum MAGIC_TYPE
     {
         Magic01 = 0,
@@ -53,14 +61,14 @@ public class PrefabManager : NetworkBehaviour
     }
 
 	[Command]
-	public void CmdSpawnMagic(MAGIC_TYPE v_type, Vector3 v_pos)
+	public void CmdSpawnMagic(udsPrefabData v_data)
     {
 		GameObject temp = null;
-		switch (v_type)
+		switch (v_data.magicType)
         {
             case MAGIC_TYPE.Magic01:
                 if (m_bMagicCD == true) return;
-				temp = (GameObject)Instantiate(m_objMagic01, v_pos + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);    
+				temp = (GameObject)Instantiate(m_objMagic01, v_data.targetPos + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);    
                 m_bMagicCD = true;
                 m_fMagicCDClick = 0.0f;
 				break;
@@ -68,23 +76,21 @@ public class PrefabManager : NetworkBehaviour
                 break;
             case MAGIC_TYPE.Magic03:
                 break;
-            case MAGIC_TYPE.Magic01Hit:
-
-                
-                temp = (GameObject)Instantiate(m_objMagic01_Hit, v_pos , Quaternion.identity);
+            case MAGIC_TYPE.Magic01Hit:  
+                temp = (GameObject)Instantiate(m_objMagic01_Hit, v_data.targetPos , Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health01:
-                // Vector3 v3Target = v_pos;
-                // Vector3 v3Start = r_transform.position;
-                // Vector3 v3Result = (v3Target - v3Start).normalized;
-                // Debug.Log("v3Target: " + v3Target + " / v3Start: " + v3Start + " / v3Result: " + v3Result);
-                // temp = (GameObject)Instantiate(m_objHealth01, r_transform.position + r_transform.forward * 1.5f , Quaternion.Euler(v3Result));
+                Vector3 v3Target = v_data.targetPos;
+                Vector3 v3Start = v_data.startPos;
+                Vector3 v3Result = (v3Target - v3Start).normalized;
+                Debug.Log("v3Target: " + v3Target + " / v3Start: " + v3Start + " / v3Result: " + v3Result);
+                temp = (GameObject)Instantiate(m_objHealth01, v_data.targetPos + v_data.forward * 1.5f , Quaternion.Euler(v3Result));
                 break;
             case MAGIC_TYPE.Health02:
-				temp = (GameObject)Instantiate(m_objHealth02, v_pos, Quaternion.identity);
+				temp = (GameObject)Instantiate(m_objHealth02, v_data.targetPos, Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health03:
-				temp = (GameObject)Instantiate(m_objHealth03, v_pos, Quaternion.identity);
+				temp = (GameObject)Instantiate(m_objHealth03, v_data.targetPos, Quaternion.identity);
                 break;
             default:
                 break;
