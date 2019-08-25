@@ -22,7 +22,12 @@ public class Magic01Controller : MonoBehaviour
         if (other.tag == "Floor")
         {
             Debug.Log("Hit floor");
-            PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Magic01Hit, transform.position);
+
+            PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+			data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
+			data.targetPos = transform.position;
+
+            PrefabManager.Instance.CmdSpawnMagic(data);
             Destroy(gameObject);
         }
     }
