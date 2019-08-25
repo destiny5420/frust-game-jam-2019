@@ -53,7 +53,7 @@ public class PrefabManager : NetworkBehaviour
     }
 
 	[Command]
-	public void CmdSpawnMagic(MAGIC_TYPE v_type, Vector3 v_pos, Transform r_transform = null)
+	public void CmdSpawnMagic(MAGIC_TYPE v_type, Vector3 v_pos)
     {
 		GameObject temp = null;
 		switch (v_type)
@@ -74,11 +74,11 @@ public class PrefabManager : NetworkBehaviour
                 temp = (GameObject)Instantiate(m_objMagic01_Hit, v_pos , Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health01:
-                Vector3 v3Target = v_pos;
-                Vector3 v3Start = r_transform.position;
-                Vector3 v3Result = (v3Target - v3Start).normalized;
-                Debug.Log("v3Target: " + v3Target + " / v3Start: " + v3Start + " / v3Result: " + v3Result);
-                temp = (GameObject)Instantiate(m_objHealth01, r_transform.position + r_transform.forward * 1.5f , Quaternion.Euler(v3Result));
+                // Vector3 v3Target = v_pos;
+                // Vector3 v3Start = r_transform.position;
+                // Vector3 v3Result = (v3Target - v3Start).normalized;
+                // Debug.Log("v3Target: " + v3Target + " / v3Start: " + v3Start + " / v3Result: " + v3Result);
+                // temp = (GameObject)Instantiate(m_objHealth01, r_transform.position + r_transform.forward * 1.5f , Quaternion.Euler(v3Result));
                 break;
             case MAGIC_TYPE.Health02:
 				temp = (GameObject)Instantiate(m_objHealth02, v_pos, Quaternion.identity);

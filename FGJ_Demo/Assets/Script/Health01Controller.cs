@@ -21,7 +21,7 @@ public class Health01Controller : MonoBehaviour
         if (other.tag == "Well" || other.tag == "Player")
         {
             Debug.Log("Hit " + other.gameObject.name);
-            //PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Magic01Hit, transform.position);
+            PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Magic01Hit, transform.position);
             Destroy(gameObject);
         }
     }
