@@ -192,6 +192,10 @@ public class PlayerController : NetworkBehaviour
 			else if (weapon == 2 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("MagicAttack");
+				PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+				data.magicType = PrefabManager.MAGIC_TYPE.Magic01;
+				data.targetPos = m_v3CurMouseHitPoint;
+				PrefabManager.Instance.CmdSpawnMagic(data);
 			}
 			else if (weapon == 3 && m_Attritube.IsAttack == false)
 			{
@@ -262,22 +266,22 @@ public class PlayerController : NetworkBehaviour
 			Drink.SetActive(false);
 		}
 		
-		if (Input.GetMouseButtonDown(0) && weapon == 1)
-		{
-			Ani.SetTrigger("Attack");
-		}
-		if (Input.GetMouseButtonDown(0) && weapon == 2)
-		{
-			Ani.SetTrigger("MagicAttack");
-		}
-		if (Input.GetMouseButtonDown(0) && weapon == 3)
-		{
-			Ani.SetTrigger("GunAttack");
-		}
-		if (Input.GetMouseButtonDown(0) && weapon == 4)
-		{
-			Ani.SetTrigger("Drink");
-		}
+		//if (Input.GetMouseButtonDown(0) && weapon == 1)
+		//{
+		//	Ani.SetTrigger("Attack");
+		//}
+		//if (Input.GetMouseButtonDown(0) && weapon == 2)
+		//{
+		//	Ani.SetTrigger("MagicAttack");
+		//}
+		//if (Input.GetMouseButtonDown(0) && weapon == 3)
+		//{
+		//	Ani.SetTrigger("GunAttack");
+		//}
+		//if (Input.GetMouseButtonDown(0) && weapon == 4)
+		//{
+		//	Ani.SetTrigger("Drink");
+		//}
 
 		if (running)
 		{
