@@ -19,9 +19,20 @@ public class PlayerController : NetworkBehaviour
 	public GameObject particlePrefab;
 	public Transform particleSpawn;
 
+	// model
+	public GameObject Sword;
+	public GameObject Staff;
+	public Animator Ani;
+	public float weapon;
+	public bool running;
+
 	void Start()
     {
 		m_Health = this.GetComponent<Health>();
+
+		// model
+		Sword.SetActive(false);
+		Staff.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -59,19 +70,29 @@ public class PlayerController : NetworkBehaviour
 		if (m_Health.currentHealth <= 0)
 			return;
 
+		ModelUpdate();
+
 		FollowMouse();
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			CmdFire();
+			if (bJump == false)
+			{
+				bJump = true;
+			}
 		}
 
 		float x = Input.GetAxis("Horizontal") * Time.deltaTime * playerMoveSpeed;
 		float z = Input.GetAxis("Vertical") * Time.deltaTime * playerMoveSpeed;
-		//if (Mathf.Abs(x) < 0.1f && Mathf.Abs(z) < 0.1f)
-		//{
-		//	playerMoveSpeed = playerStartMoveSpeed;
-		//}
+		if (Mathf.Abs(x) > 0.1f || Mathf.Abs(z) > 0.1f)
+		{
+			running = true;
+		}
+		else
+		{
+			running = false;
+		}
+
 		transform.position += new Vector3(x, 0, z);
 		//if (playerMoveSpeed < playerMoveSpeedLimit)
 		//{
@@ -95,10 +116,7 @@ public class PlayerController : NetworkBehaviour
 
 		if(Input.GetKeyDown(KeyCode.C))
 		{
-			if(bJump == false)
-			{
-				bJump = true;
-			}
+
 		}
 		
 		if (Input.GetKeyDown(KeyCode.F1))
@@ -113,12 +131,75 @@ public class PlayerController : NetworkBehaviour
 
 		JumpBehavior();
 
-		if(Input.GetKeyDown(KeyCode.F9))
+		if (Input.GetKeyDown(KeyCode.F9))
 		{
 			bBoss = true;
 			GameSetting.bBossMode = true;
+			SyncGameSetting.GetInstance.bBoss = true;
+			SyncGameSetting.GetInstance.iCurrentBossId = netId.Value;
 			GetComponent<MeshRenderer>().material.color = Color.red;
 		}
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			if (weapon == 1)
+			{
+				Ani.SetTrigger("Attack");
+			}
+			else if (weapon == 2)
+			{
+				Ani.SetTrigger("MagicAttack");
+			}
+			else
+			{
+				CmdFire();
+			}
+		}
+	}
+
+	void ModelUpdate()
+	{
+		if (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			weapon = 1;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", true);
+			Sword.SetActive(true);
+			Staff.SetActive(false);
+
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			weapon = 2;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", true);
+			Staff.SetActive(true);
+			Sword.SetActive(false);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha0))
+		{
+			weapon = 0;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", false);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+		}
+		
+		if (Input.GetMouseButtonDown(0) && weapon == 1)
+		{
+			Ani.SetTrigger("Attack");
+		}
+		if (Input.GetMouseButtonDown(0) && weapon == 2)
+		{
+			Ani.SetTrigger("MagicAttack");
+		}
+
+		if (running)
+		{
+			Ani.SetBool("Run", true);
+		}
+		else
+			Ani.SetBool("Run", false);
 	}
 
 	bool bJump = false;
