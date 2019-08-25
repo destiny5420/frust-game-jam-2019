@@ -10,6 +10,7 @@ public class PrefabManager : NetworkBehaviour
         Magic01 = 0,
         Magic02,
         Magic03,
+        Magic01Hit,
         Health01,
         Health02,
         Health03,
@@ -24,6 +25,7 @@ public class PrefabManager : NetworkBehaviour
     public GameObject m_objMagic01;
     public GameObject m_objMagic02;
     public GameObject m_objMagic03;
+    public GameObject m_objMagic01_Hit;
     public GameObject m_objHealth01;
     public GameObject m_objHealth02;
     public GameObject m_objHealth03;
@@ -46,6 +48,9 @@ public class PrefabManager : NetworkBehaviour
             case MAGIC_TYPE.Magic02:
                 break;
             case MAGIC_TYPE.Magic03:
+                break;
+            case MAGIC_TYPE.Magic01Hit:
+                temp = (GameObject)Instantiate(m_objMagic01_Hit, v_pos, Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health01:
 				temp = (GameObject)Instantiate(m_objHealth01, v_pos, Quaternion.identity);
