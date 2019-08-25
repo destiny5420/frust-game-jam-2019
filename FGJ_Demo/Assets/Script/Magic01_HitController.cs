@@ -15,4 +15,16 @@ public class Magic01_HitController : MonoBehaviour
     {
         
     }
+
+	private void OnTriggerEnter(Collider other)
+	{
+		Debug.Log("OnTriggerEnter");
+		GameObject hit = other.gameObject;
+		Debug.Log("other " + other.gameObject.name);
+		Health hp = hit.GetComponent<Health>();
+		if (hp != null)
+		{
+			hp.TakeDamage(50);
+		}
+	}
 }
