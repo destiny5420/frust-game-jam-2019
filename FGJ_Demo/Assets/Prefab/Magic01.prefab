@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4301792975322787515}
   - component: {fileID: 3298244293522155346}
   - component: {fileID: 7640167461518192478}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 1500120501209748336}
   - component: {fileID: 5118442723912480198}
   - component: {fileID: 8525053560670893665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4858,7 +4858,7 @@ GameObject:
   - component: {fileID: 6902284346000723918}
   - component: {fileID: 7838199805780270855}
   - component: {fileID: 1288600392142144584}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magic01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4926,7 +4926,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
