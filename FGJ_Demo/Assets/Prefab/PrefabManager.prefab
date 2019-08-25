@@ -51,6 +51,8 @@ MonoBehaviour:
     type: 3}
   m_objMagic03: {fileID: 6080387119637123063, guid: a1bd28f8729764507b2f2ac0c217f146,
     type: 3}
+  m_objMagic01_Hit: {fileID: 714977225350840178, guid: e0dbaf3edbfe3438699958f96112f251,
+    type: 3}
   m_objHealth01: {fileID: 8149810653398289184, guid: cad623298669546f7a7548ad247a80d3,
     type: 3}
   m_objHealth02: {fileID: 0}

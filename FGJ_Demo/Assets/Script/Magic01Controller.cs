@@ -19,9 +19,11 @@ public class Magic01Controller : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (GetComponent<Collider>().tag == "Floor")
+        if (other.tag == "Floor")
         {
             Debug.Log("Hit floor");
+            PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Magic01Hit, transform.position);
+            Destroy(gameObject);
         }
     }
 }
