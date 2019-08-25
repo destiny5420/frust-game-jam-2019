@@ -44,7 +44,7 @@ public class PlayerController : NetworkBehaviour
 
 		if(bBoss != true)
 		{
-			switch ((connectionToClient.connectionId % 4)+1)
+			switch ((netId.Value % 4)+1)
 			{
 				case 1:
 					renderer.material = m_mat[0];
@@ -152,7 +152,7 @@ public class PlayerController : NetworkBehaviour
 			bBoss = true;
 			GameSetting.bBossMode = true;
 			SyncGameSetting.GetInstance.bBoss = true;
-			SyncGameSetting.GetInstance.iCurrentBossId = connectionToClient.connectionId;
+			SyncGameSetting.GetInstance.iCurrentBossId = netId.Value;
 			GetComponent<MeshRenderer>().material.color = Color.red;
 		}
 
@@ -277,11 +277,11 @@ public class PlayerController : NetworkBehaviour
 	public override void OnStartLocalPlayer()
 	{
 		// self
-		this.transform.position += (Vector3.forward * connectionToClient.connectionId);
+		this.transform.position += (Vector3.forward * netId.Value);
 
 		selfTargetSign.enabled = true;
 
-		switch ((connectionToClient.connectionId % 4) + 1)
+		switch ((netId.Value % 4) + 1)
 		{
 			case 1:
 				renderer.material = m_mat[0];
@@ -314,7 +314,7 @@ public class PlayerController : NetworkBehaviour
 
 		// Add velocity to the bullet
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20.0f;
-		bullet.GetComponent<bullet>().playerID = (int)connectionToClient.connectionId;
+		bullet.GetComponent<bullet>().playerID = (int)netId.Value;
 		bullet.GetComponent<bullet>().bBoss = bBoss;
 		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), this.GetComponent<Collider>());
 

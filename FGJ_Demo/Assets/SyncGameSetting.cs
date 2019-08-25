@@ -8,7 +8,7 @@ public class SyncGameSetting : NetworkBehaviour
 	public bool bBoss = false;
 
 	[SyncVar(hook = "SetBoss")]
-	public int iCurrentBossId = 99;
+	public uint iCurrentBossId = 99;
 
 	private static SyncGameSetting m_Instance = null;
 
@@ -33,9 +33,9 @@ public class SyncGameSetting : NetworkBehaviour
 			//CmdSetBoss(netId.Value);
 			//RpcSetBoss(netId.Value);
 			if(isServer)
-				SetBoss(connectionToClient.connectionId);
+				SetBoss(netId.Value);
 			else
-				CmdSetBoss(connectionToClient.connectionId);
+				CmdSetBoss(netId.Value);
 
 			//if (isServer)
 			//	CmdSetBoss(netId.Value);
@@ -57,14 +57,14 @@ public class SyncGameSetting : NetworkBehaviour
 	}
 
 	[Command]
-	void CmdSetBoss(int NetID)
+	void CmdSetBoss(uint NetID)
 	{
 		Debug.Log("CmdSetBoss " + NetID);
 		bBoss = true;
 		iCurrentBossId = NetID;
 	}
 
-	public void SetBoss(int NetID)
+	public void SetBoss(uint NetID)
 	{
 		Debug.Log("SetBoss " + NetID);
 		bBoss = true;
@@ -72,7 +72,7 @@ public class SyncGameSetting : NetworkBehaviour
 	}
 
 	[ClientRpc]
-	public void RpcSetBoss(int NetID)
+	public void RpcSetBoss(uint NetID)
 	{
 		bBoss = true;
 		iCurrentBossId = NetID;

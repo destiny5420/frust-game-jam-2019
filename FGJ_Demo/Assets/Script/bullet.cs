@@ -23,7 +23,9 @@ public class bullet : NetworkTransform
 
 	void OnCollisionEnter(Collision collision)
 	{
+		Debug.Log("OnCollisionEnter");
 		GameObject hit = collision.gameObject;
+		Debug.Log("collision " + collision.gameObject.name);
 		Health hp = hit.GetComponent<Health>();
 		if (hp != null)
 		{
@@ -43,6 +45,10 @@ public class bullet : NetworkTransform
 						hp.TakeDamage(10);
 				}
 			}
+		}
+		else
+		{
+
 		}
 
 		Destroy(gameObject);
