@@ -22,11 +22,19 @@ public class Health01Controller : MonoBehaviour
         {
             Debug.Log("Hit " + other.gameObject.name);
 
-            PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
-			data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
-			data.targetPos = transform.position;
-            PrefabManager.Instance.CmdSpawnMagic(data);
-            Destroy(gameObject);
+
+			Health hp = other.GetComponent<Health>();
+			if (hp != null)
+			{
+				hp.currentHealth += 20;
+				if (hp.currentHealth > 100)
+					hp.currentHealth = 100;
+			}
+				//         PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+				//data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
+				//data.targetPos = transform.position;
+				//         PrefabManager.Instance.CmdSpawnMagic(data);
+				Destroy(gameObject);
         }
     }
 }

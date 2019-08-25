@@ -192,6 +192,10 @@ public class PlayerController : NetworkBehaviour
 			else if (weapon == 2 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("MagicAttack");
+				PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+				data.magicType = PrefabManager.MAGIC_TYPE.Magic01;
+				data.targetPos = m_v3CurMouseHitPoint;
+				PrefabManager.Instance.CmdSpawnMagic(data);
 			}
 			else if (weapon == 3 && m_Attritube.IsAttack == false)
 			{
@@ -201,6 +205,19 @@ public class PlayerController : NetworkBehaviour
 			else if (weapon == 4 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("Drink");
+				m_Health.currentHealth += 50;
+				if (m_Health.currentHealth > 100)
+					m_Health.currentHealth = 100;
+			}
+			else if (weapon == 5 && m_Attritube.IsAttack == false)
+			{
+				PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+				data.magicType = PrefabManager.MAGIC_TYPE.Health01;
+				data.targetPos = m_v3CurMouseHitPoint;
+				data.forward = transform.forward;
+				data.startPos = transform.position;
+
+				PrefabManager.Instance.CmdSpawnMagic(data);
 			}
 			else
 			{
@@ -251,6 +268,16 @@ public class PlayerController : NetworkBehaviour
 			Gun.SetActive(false);
 			Drink.SetActive(true);
 		}
+		if (Input.GetKeyDown(KeyCode.Alpha5))
+		{
+			weapon = 5;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", true);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(false);
+		}
 		if (Input.GetKeyDown(KeyCode.Alpha0))
 		{
 			weapon = 0;
@@ -262,22 +289,22 @@ public class PlayerController : NetworkBehaviour
 			Drink.SetActive(false);
 		}
 		
-		if (Input.GetMouseButtonDown(0) && weapon == 1)
-		{
-			Ani.SetTrigger("Attack");
-		}
-		if (Input.GetMouseButtonDown(0) && weapon == 2)
-		{
-			Ani.SetTrigger("MagicAttack");
-		}
-		if (Input.GetMouseButtonDown(0) && weapon == 3)
-		{
-			Ani.SetTrigger("GunAttack");
-		}
-		if (Input.GetMouseButtonDown(0) && weapon == 4)
-		{
-			Ani.SetTrigger("Drink");
-		}
+		//if (Input.GetMouseButtonDown(0) && weapon == 1)
+		//{
+		//	Ani.SetTrigger("Attack");
+		//}
+		//if (Input.GetMouseButtonDown(0) && weapon == 2)
+		//{
+		//	Ani.SetTrigger("MagicAttack");
+		//}
+		//if (Input.GetMouseButtonDown(0) && weapon == 3)
+		//{
+		//	Ani.SetTrigger("GunAttack");
+		//}
+		//if (Input.GetMouseButtonDown(0) && weapon == 4)
+		//{
+		//	Ani.SetTrigger("Drink");
+		//}
 
 		if (running)
 		{
