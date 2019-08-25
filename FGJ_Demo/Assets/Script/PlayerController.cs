@@ -277,7 +277,7 @@ public class PlayerController : NetworkBehaviour
 	public override void OnStartLocalPlayer()
 	{
 		// self
-		this.transform.position += (Vector3.forward * netId.Value);
+		this.transform.position += (Vector3.forward * netId.Value) + Vector3.up*0.5f;
 
 		selfTargetSign.enabled = true;
 
@@ -328,6 +328,8 @@ public class PlayerController : NetworkBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log("OnTriggerEnter");
+		if (other.tag != "Floor")
+			return;
 		ResetJump();
 	}
 
