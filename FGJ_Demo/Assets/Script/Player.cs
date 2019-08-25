@@ -60,20 +60,31 @@ public class Player : MonoBehaviour
             Sword.SetActive(false);
             Gun.SetActive(true);
             Drink.SetActive(false);
-        }
+		}
 
-        if (Input.GetKeyDown(KeyCode.Alpha4) && IsAttack == false)
-        {
-            weapon = 4;
-            Ani.SetBool("HaveWeapon", false);
-            Ani.SetBool("HaveGun", true);
-            Staff.SetActive(false);
-            Sword.SetActive(false);
-            Gun.SetActive(false);
-            Drink.SetActive(true);
-        }
+		if (Input.GetKeyDown(KeyCode.Alpha4) && IsAttack == false)
+		{
+			weapon = 4;
+			Ani.SetBool("HaveWeapon", false);
+			Ani.SetBool("HaveGun", true);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(true);
+		}
 
-        if (Input.GetKeyDown(KeyCode.Alpha0) && IsAttack == false)
+		if (Input.GetKeyDown(KeyCode.Alpha5) && IsAttack == false)
+		{
+			weapon = 5;
+			Ani.SetBool("HaveWeapon", false);
+			Ani.SetBool("HaveGun", true);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(false);
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha0) && IsAttack == false)
         {
             weapon = 0;
             Ani.SetBool("HaveWeapon", false);

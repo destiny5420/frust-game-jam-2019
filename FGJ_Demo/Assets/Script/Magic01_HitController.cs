@@ -24,7 +24,7 @@ public class Magic01_HitController : MonoBehaviour
 		Health hp = hit.GetComponent<Health>();
 		if (hp != null)
 		{
-			hp.TakeDamage(50);
+			hp.TakeDamage(45);
 		}
 	}
 }

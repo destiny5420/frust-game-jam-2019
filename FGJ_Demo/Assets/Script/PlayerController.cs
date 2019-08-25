@@ -209,6 +209,16 @@ public class PlayerController : NetworkBehaviour
 				if (m_Health.currentHealth > 100)
 					m_Health.currentHealth = 100;
 			}
+			else if (weapon == 5 && m_Attritube.IsAttack == false)
+			{
+				PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+				data.magicType = PrefabManager.MAGIC_TYPE.Health01;
+				data.targetPos = m_v3CurMouseHitPoint;
+				data.forward = transform.forward;
+				data.startPos = transform.position;
+
+				PrefabManager.Instance.CmdSpawnMagic(data);
+			}
 			else
 			{
 			}
@@ -257,6 +267,16 @@ public class PlayerController : NetworkBehaviour
 			Sword.SetActive(false);
 			Gun.SetActive(false);
 			Drink.SetActive(true);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha5))
+		{
+			weapon = 5;
+			Ani.SetFloat("Weapon", weapon);
+			Ani.SetBool("HaveWeapon", true);
+			Staff.SetActive(false);
+			Sword.SetActive(false);
+			Gun.SetActive(false);
+			Drink.SetActive(false);
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha0))
 		{
