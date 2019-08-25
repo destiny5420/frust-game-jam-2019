@@ -9,6 +9,20 @@ public class CameraController : MonoBehaviour
     Vector3 m_v3CameraDisWithPlayer = new Vector3(0.0f, 10.0f, -18.0f);
     float m_fRotX = 30.0f;
 
+    [SerializeField] float frequency = 25;
+    bool m_bEnablShakeing;
+    [SerializeField] Vector3 maximumTranslationShake = Vector3.one * 0.5f;
+    [SerializeField] Vector3 maximumAngularShake = Vector3.one * 2;
+    [SerializeField] float recoverySpeed = 1.5f;
+    private float trauma = 0;
+    private float seed;
+    [SerializeField] float traumaExponent = 2;
+
+    private void Awake()
+    {
+        seed = Random.value;
+    }
+
     void Start()
     {
         
@@ -17,7 +31,37 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         FindPlayerTarget();
-        
+        CamerShakeUpdate();
+    }
+
+    void CamerShakeUpdate()
+    {
+        if (m_bEnablShakeing == false)
+            return;
+
+        if (trauma == 0)
+            m_bEnablShakeing = false;
+
+        float shake = Mathf.Pow(trauma, traumaExponent);
+
+        // Modify the existing code.
+        transform.localPosition = new Vector3(
+            maximumTranslationShake.x * (Mathf.PerlinNoise(seed, Time.time * frequency) * 2 - 1),
+            maximumTranslationShake.y * (Mathf.PerlinNoise(seed + 1, Time.time * frequency) * 2 - 1),
+            maximumTranslationShake.z * (Mathf.PerlinNoise(seed + 2, Time.time * frequency) * 2 - 1)
+        ) * shake;
+
+        transform.localRotation = Quaternion.Euler(new Vector3(
+            maximumAngularShake.x * (Mathf.PerlinNoise(seed + 3, Time.time * frequency) * 2 - 1),
+            maximumAngularShake.y * (Mathf.PerlinNoise(seed + 4, Time.time * frequency) * 2 - 1),
+            maximumAngularShake.z * (Mathf.PerlinNoise(seed + 5, Time.time * frequency) * 2 - 1)
+        ) * shake);
+    }
+
+    public void InduceStress(float stress)
+    {
+        trauma = Mathf.Clamp01(trauma + stress);
+        m_bEnablShakeing = true;
     }
 
     void FindPlayerTarget()
