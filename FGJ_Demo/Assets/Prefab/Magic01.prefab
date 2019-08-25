@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2677651351749141603}
   - component: {fileID: 4301792975322787515}
   - component: {fileID: 3298244293522155346}
-  - component: {fileID: 7640167461518192478}
   m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1134947786757246387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 6902284346000723918}
   m_RootOrder: 0
@@ -78,19 +77,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7640167461518192478
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1134947786757246387}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4261771146560586565
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4261771146560586565}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalPosition: {x: 0, y: -1.04, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6902284346000723918}
@@ -259,7 +245,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.9186506
+      scalar: 8.075432
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -837,7 +823,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.27235204
+      value: 1.2466942
       mode: 0
       spread: 0
       speed:
@@ -956,7 +942,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 50
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1131,21 +1117,30 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: -1
-          outSlope: -1
-          tangentMode: 34
+          value: 0.20202017
+          inSlope: 4.9523015
+          outSlope: 4.9523015
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.1863651
+        - serializedVersion: 3
+          time: 0.2736108
+          value: 0.94444466
+          inSlope: 0.79700667
+          outSlope: 0.79700667
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0
-          inSlope: -1
-          outSlope: -1
-          tangentMode: 34
+          value: 0.13131051
+          inSlope: -2.1790123
+          outSlope: -2.1790123
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.1403972
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1282,7 +1277,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -1392,7 +1387,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7853982
+      scalar: 3.1415925
       minScalar: 0.7853982
       maxCurve:
         serializedVersion: 2
@@ -1453,7 +1448,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.2863564, g: 0.9339623, b: 0.5096688, a: 1}
-        key1: {r: 0.9490196, g: 0.5198357, b: 1, a: 1}
+        key1: {r: 0.9528302, g: 0.4238974, b: 0, a: 1}
         key2: {r: 0.3891819, g: 0.8697022, b: 0.58575356, a: 1}
         key3: {r: 1, g: 1, b: 1, a: 0}
         key4: {r: 1, g: 1, b: 1, a: 0}
@@ -4858,6 +4853,8 @@ GameObject:
   - component: {fileID: 6902284346000723918}
   - component: {fileID: 7838199805780270855}
   - component: {fileID: 1288600392142144584}
+  - component: {fileID: 5388637272829295810}
+  - component: {fileID: 1124504066644782551}
   m_Layer: 8
   m_Name: Magic01
   m_TagString: Untagged
@@ -4936,3 +4933,28 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &5388637272829295810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6855815788384641967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc281034e4954ef49a08de2c061e403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &1124504066644782551
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6855815788384641967}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
