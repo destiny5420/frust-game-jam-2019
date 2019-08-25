@@ -21,15 +21,15 @@ public class bullet : NetworkTransform
 
 	}
 
-	void OnCollisionEnter(Collision collision)
+	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log("OnCollisionEnter");
-		GameObject hit = collision.gameObject;
-		Debug.Log("collision " + collision.gameObject.name);
+		GameObject hit = other.gameObject;
+		Debug.Log("collision " + other.gameObject.name);
 		Health hp = hit.GetComponent<Health>();
 		if (hp != null)
 		{
-			if(bBoss == true)
+			if (bBoss == true)
 			{
 				hp.TakeDamage(20);
 			}

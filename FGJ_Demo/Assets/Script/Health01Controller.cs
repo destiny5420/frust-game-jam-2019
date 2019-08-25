@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Health01Controller : MonoBehaviour
+public class Health01Controller : NetworkTransform
 {
     float m_fSpeedUnit = 10.0f;
 
