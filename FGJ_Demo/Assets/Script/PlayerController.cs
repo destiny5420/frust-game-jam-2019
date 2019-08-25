@@ -108,7 +108,7 @@ public class PlayerController : NetworkBehaviour
 
 		if (Input.GetKeyDown(KeyCode.F2))
 		{
-			PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Health01, m_v3CurMouseHitPoint);
+			PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Health01, m_v3CurMouseHitPoint, transform);
 		}
 
 		JumpBehavior();
