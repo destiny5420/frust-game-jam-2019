@@ -41,7 +41,7 @@ public class PrefabManager : NetworkBehaviour
 		switch (v_type)
         {
             case MAGIC_TYPE.Magic01:
-				temp = (GameObject)Instantiate(m_objMagic01, v_pos, Quaternion.identity);
+				temp = (GameObject)Instantiate(m_objMagic01, v_pos + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);
 				break;
             case MAGIC_TYPE.Magic02:
                 break;
