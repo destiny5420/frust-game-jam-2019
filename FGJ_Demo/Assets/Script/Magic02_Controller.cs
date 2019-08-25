@@ -6,7 +6,7 @@ public class Magic02_Controller : MonoBehaviour
 {
     void Start()
     {
-        Destroy(gameObject, 3.0f);
+        Destroy(gameObject, 6.0f);
     }
 
     void Update()

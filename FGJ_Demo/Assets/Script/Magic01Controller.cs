@@ -33,6 +33,8 @@ public class Magic01Controller : MonoBehaviour
 			data2.magicType = PrefabManager.MAGIC_TYPE.Magic02;
 			data2.targetPos = transform.position;
 
+            CameraController.Instance.InduceStress(1.0f);
+
             PrefabManager.Instance.CmdSpawnMagic(data2);
             Destroy(gameObject);
         }
