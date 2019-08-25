@@ -26,6 +26,9 @@ public class PlayerController : NetworkBehaviour
 	public float weapon;
 	public bool running;
 
+	public Material[] m_mat;
+	public SkinnedMeshRenderer renderer;
+
 	void Start()
     {
 		m_Health = this.GetComponent<Health>();
@@ -44,15 +47,19 @@ public class PlayerController : NetworkBehaviour
 			switch ((netId.Value%4)+1)
 			{
 				case 1:
+					renderer.material = m_mat[0];
 					GetComponent<MeshRenderer>().material.color = Color.blue;
 					break;
 				case 2:
+					renderer.material = m_mat[1];
 					GetComponent<MeshRenderer>().material.color = new Color(160.0f / 255.0f, 32.0f / 255.0f, 240.0f / 255.0f);
 					break;
 				case 3:
+					renderer.material = m_mat[2];
 					GetComponent<MeshRenderer>().material.color = Color.green;
 					break;
 				case 4:
+					renderer.material = m_mat[3];
 					GetComponent<MeshRenderer>().material.color = Color.white;
 					break;
 			}
