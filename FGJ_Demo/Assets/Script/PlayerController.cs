@@ -196,6 +196,7 @@ public class PlayerController : NetworkBehaviour
 			else if (weapon == 3 && m_Attritube.IsAttack == false)
 			{
 				Ani.SetTrigger("GunAttack");
+				CmdFire();
 			}
 			else if (weapon == 4 && m_Attritube.IsAttack == false)
 			{
@@ -203,7 +204,6 @@ public class PlayerController : NetworkBehaviour
 			}
 			else
 			{
-				CmdFire();
 			}
 		}
 	}
