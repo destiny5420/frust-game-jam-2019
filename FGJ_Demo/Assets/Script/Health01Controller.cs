@@ -13,7 +13,7 @@ public class Health01Controller : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * m_fSpeedUnit);
+        transform.Translate(Vector3.forward * Time.deltaTime * m_fSpeedUnit, Space.Self);
     }
 
     void OnTriggerEnter(Collider other)
@@ -28,5 +28,10 @@ public class Health01Controller : MonoBehaviour
             PrefabManager.Instance.CmdSpawnMagic(data);
             Destroy(gameObject);
         }
+    }
+
+    void SettingConfigure()
+    {
+
     }
 }

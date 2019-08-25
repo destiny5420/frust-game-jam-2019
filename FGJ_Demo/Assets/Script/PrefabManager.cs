@@ -80,11 +80,10 @@ public class PrefabManager : NetworkBehaviour
                 temp = (GameObject)Instantiate(m_objMagic01_Hit, v_data.targetPos , Quaternion.identity);
                 break;
             case MAGIC_TYPE.Health01:
-                Vector3 v3Target = v_data.targetPos;
-                Vector3 v3Start = v_data.startPos;
-                Vector3 v3Result = (v3Target - v3Start).normalized;
-                Debug.Log("v3Target: " + v3Target + " / v3Start: " + v3Start + " / v3Result: " + v3Result);
-                temp = (GameObject)Instantiate(m_objHealth01, v_data.targetPos + v_data.forward * 1.5f , Quaternion.Euler(v3Result));
+                Vector3 v3Result = (v_data.targetPos - v_data.startPos);
+                Quaternion resultQuaternion =  Quaternion.LookRotation(v_data.forward);
+                temp = (GameObject)Instantiate(m_objHealth01, v_data.startPos + v_data.forward * 1.5f , resultQuaternion);
+                temp.GetComponent<Health01Controller>();
                 break;
             case MAGIC_TYPE.Health02:
 				temp = (GameObject)Instantiate(m_objHealth02, v_data.targetPos, Quaternion.identity);
