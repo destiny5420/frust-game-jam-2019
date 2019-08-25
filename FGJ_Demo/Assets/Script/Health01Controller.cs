@@ -15,4 +15,14 @@ public class Health01Controller : MonoBehaviour
     {
         transform.Translate(Vector3.forward * Time.deltaTime * m_fSpeedUnit);
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Well" || other.tag == "Player")
+        {
+            Debug.Log("Hit " + other.gameObject.name);
+            //PrefabManager.Instance.CmdSpawnMagic(PrefabManager.MAGIC_TYPE.Magic01Hit, transform.position);
+            Destroy(gameObject);
+        }
+    }
 }
