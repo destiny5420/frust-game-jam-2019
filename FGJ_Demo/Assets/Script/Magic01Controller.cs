@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Magic01Controller : MonoBehaviour
 {
-    float m_fSpeedUnit = 10.0f;
+    float m_fSpeedUnit = 15.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +28,12 @@ public class Magic01Controller : MonoBehaviour
 			data.targetPos = transform.position;
 
             PrefabManager.Instance.CmdSpawnMagic(data);
+
+            PrefabManager.udsPrefabData data2 = new PrefabManager.udsPrefabData();
+			data2.magicType = PrefabManager.MAGIC_TYPE.Magic02;
+			data2.targetPos = transform.position;
+
+            PrefabManager.Instance.CmdSpawnMagic(data2);
             Destroy(gameObject);
         }
     }
