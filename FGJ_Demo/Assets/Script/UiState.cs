@@ -5,12 +5,12 @@ using UnityEngine;
 public class UiState : MonoBehaviour
 {
     public int Uistate = 1;
-    int Uistate_old ;
+    int Uistate_old =1;
     public GameObject[] UI;
 
     public void ButtonDown(int aa) 
     {
-        Uistate_old = Uistate; Uistate = aa; // GetButton();    //有Bug 超出範圍
+        Uistate_old = Uistate; Uistate = aa;  GetButton();    //有Bug 超出範圍
     }
     void GetButton()
     {
@@ -22,7 +22,8 @@ public class UiState : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha6)) { Uistate_old = Uistate; Uistate = 6; }
 
         if (Uistate_old != Uistate) {  
-            if (Uistate_old - 1 != 0)  UI[Uistate_old - 1].SetActive(false); 
+            if (Uistate_old - 1 != 0)
+                UI[Uistate_old - 1].SetActive(false); 
             UI[Uistate-1].SetActive(true);
             Uistate_old = Uistate ;
         }
