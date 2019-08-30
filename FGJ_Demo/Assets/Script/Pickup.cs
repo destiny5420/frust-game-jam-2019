@@ -8,10 +8,9 @@ public class Pickup : MonoBehaviour
     public Inventory inventory;
     void Start()
     {
-        
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
     }
-
-    // Update is called once per frame
+     
     void Update()
     {
         
