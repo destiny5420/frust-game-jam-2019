@@ -33,7 +33,7 @@ public class Magic03Controller : NetworkTransform
 			data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
 			data.targetPos = transform.position;
 
-            PrefabManager.Instance.CmdSpawnMagic(data);
+            PrefabManager.Instance.SpawnMagic(data);
 
             PrefabManager.udsPrefabData data2 = new PrefabManager.udsPrefabData();
 			data2.magicType = PrefabManager.MAGIC_TYPE.Magic02;
@@ -41,7 +41,7 @@ public class Magic03Controller : NetworkTransform
 
             CameraController.Instance.InduceStress(4.0f);
 
-            PrefabManager.Instance.CmdSpawnMagic(data2);
+            PrefabManager.Instance.SpawnMagic(data2);
             Destroy(gameObject);
         }
     }
