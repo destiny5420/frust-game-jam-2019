@@ -10,6 +10,8 @@ public class PlayerController : NetworkBehaviour
 	public Transform bulletSpawn;
 	public Transform m_tranMouse;
 	public MeshRenderer selfTargetSign;
+
+	[SyncVar]
 	Vector3 m_v3CurMouseHitPoint;
 	Health m_Health;
 
@@ -96,8 +98,8 @@ public class PlayerController : NetworkBehaviour
 		if (m_Health.currentHealth <= 0)
 			return;
 
-		ModelUpdate();
-
+		WeaponChange_Update();
+		AttackUpdate();
 		FollowMouse();
 
 		if (Input.GetKeyDown(KeyCode.Space))
@@ -150,7 +152,7 @@ public class PlayerController : NetworkBehaviour
 			PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
 			data.magicType = PrefabManager.MAGIC_TYPE.Magic01;
 			data.targetPos = m_v3CurMouseHitPoint;
-			PrefabManager.Instance.CmdSpawnMagic(data);
+			PrefabManager.Instance.SpawnMagic(data);
 		}
 
 		if (Input.GetKeyDown(KeyCode.F2))
@@ -161,7 +163,7 @@ public class PlayerController : NetworkBehaviour
 			data.forward = transform.forward;
 			data.startPos = transform.position;
 
-			PrefabManager.Instance.CmdSpawnMagic(data);
+			PrefabManager.Instance.SpawnMagic(data);
 		}
 
 		if (Input.GetKeyDown(KeyCode.F3))
@@ -169,7 +171,7 @@ public class PlayerController : NetworkBehaviour
 			PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
 			data.magicType = PrefabManager.MAGIC_TYPE.Magic03;
 			data.targetPos = m_v3CurMouseHitPoint;
-			PrefabManager.Instance.CmdSpawnMagic(data);
+			PrefabManager.Instance.SpawnMagic(data);
 		}
 
 		JumpBehavior();
@@ -183,49 +185,9 @@ public class PlayerController : NetworkBehaviour
 			GetComponent<MeshRenderer>().material.color = Color.red;
 		}
 
-		if (Input.GetMouseButtonDown(0))
-		{
-			if (weapon == 1 && m_Attritube.IsAttack == false)
-			{
-				Ani.SetTrigger("Attack");
-			}
-			else if (weapon == 2 && m_Attritube.IsAttack == false)
-			{
-				Ani.SetTrigger("MagicAttack");
-				PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
-				data.magicType = PrefabManager.MAGIC_TYPE.Magic01;
-				data.targetPos = m_v3CurMouseHitPoint;
-				PrefabManager.Instance.CmdSpawnMagic(data);
-			}
-			else if (weapon == 3 && m_Attritube.IsAttack == false)
-			{
-				Ani.SetTrigger("GunAttack");
-				CmdFire();
-			}
-			else if (weapon == 4 && m_Attritube.IsAttack == false)
-			{
-				Ani.SetTrigger("Drink");
-				m_Health.currentHealth += 50;
-				if (m_Health.currentHealth > 100)
-					m_Health.currentHealth = 100;
-			}
-			else if (weapon == 5 && m_Attritube.IsAttack == false)
-			{
-				PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
-				data.magicType = PrefabManager.MAGIC_TYPE.Health01;
-				data.targetPos = m_v3CurMouseHitPoint;
-				data.forward = transform.forward;
-				data.startPos = transform.position;
-
-				PrefabManager.Instance.CmdSpawnMagic(data);
-			}
-			else
-			{
-			}
-		}
 	}
 
-	void ModelUpdate()
+	void WeaponChange_Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
@@ -237,6 +199,8 @@ public class PlayerController : NetworkBehaviour
 			Gun.SetActive(false);
 			Drink.SetActive(false);
 
+			Sync_Change_Weapon1();
+
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
@@ -247,6 +211,8 @@ public class PlayerController : NetworkBehaviour
 			Sword.SetActive(false);
 			Gun.SetActive(false);
 			Drink.SetActive(false);
+
+			Sync_Change_Weapon2();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
@@ -257,6 +223,8 @@ public class PlayerController : NetworkBehaviour
 			Sword.SetActive(false);
 			Gun.SetActive(true);
 			Drink.SetActive(false);
+
+			Sync_Change_Weapon3();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha4))
 		{
@@ -267,6 +235,8 @@ public class PlayerController : NetworkBehaviour
 			Sword.SetActive(false);
 			Gun.SetActive(false);
 			Drink.SetActive(true);
+
+			Sync_Change_Weapon4();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha5))
 		{
@@ -277,6 +247,8 @@ public class PlayerController : NetworkBehaviour
 			Sword.SetActive(false);
 			Gun.SetActive(false);
 			Drink.SetActive(false);
+
+			Sync_Change_Weapon5();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha0))
 		{
@@ -287,32 +259,430 @@ public class PlayerController : NetworkBehaviour
 			Sword.SetActive(false);
 			Gun.SetActive(false);
 			Drink.SetActive(false);
+
+			Sync_Change_Weapon0();
 		}
-		
-		//if (Input.GetMouseButtonDown(0) && weapon == 1)
-		//{
-		//	Ani.SetTrigger("Attack");
-		//}
-		//if (Input.GetMouseButtonDown(0) && weapon == 2)
-		//{
-		//	Ani.SetTrigger("MagicAttack");
-		//}
-		//if (Input.GetMouseButtonDown(0) && weapon == 3)
-		//{
-		//	Ani.SetTrigger("GunAttack");
-		//}
-		//if (Input.GetMouseButtonDown(0) && weapon == 4)
-		//{
-		//	Ani.SetTrigger("Drink");
-		//}
 
 		if (running)
 		{
+			// Do Self
 			Ani.SetBool("Run", true);
+			// Send To Server
+			Sync_StartMove();
 		}
 		else
+		{
+			// Do Self
 			Ani.SetBool("Run", false);
+			// Send To Server
+			Sync_StopMove();
+		}
 	}
+
+	void AttackUpdate()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			if (weapon == 1 && m_Attritube.IsAttack == false)
+			{
+				Ani.SetTrigger("Attack");
+				Sync_SwordAttack();
+			}
+			else if (weapon == 2 && m_Attritube.IsAttack == false)
+			{
+				Ani.SetTrigger("MagicAttack");
+				Sync_MagicAttack(m_v3CurMouseHitPoint);
+			}
+			else if (weapon == 3 && m_Attritube.IsAttack == false)
+			{
+				Ani.SetTrigger("GunAttack");
+				Sync_BulletFire();
+			}
+			else if (weapon == 4 && m_Attritube.IsAttack == false)
+			{
+				Debug.LogWarning("Drink");
+				// Do Self
+				Ani.SetTrigger("Drink");
+				// Send To Server
+				Sync_DrinkMedical();
+				Debug.LogWarning("Drink End");
+			}
+			else if (weapon == 5 && m_Attritube.IsAttack == false)
+			{
+				Sync_HealthFire();
+			}
+			else
+			{
+			}
+		}
+	}
+	#region Net Sync List
+
+	#region ChangeWeapon
+	void Sync_Change_Weapon0()
+	{
+		if(isServer)
+			Rpc_Change_Weapon0();
+		else
+			Cmd_Change_Weapon0();
+	}
+	[ClientRpc]
+	void Rpc_Change_Weapon0()
+	{
+		Change_Weapon0();
+	}
+	[Command]
+	void Cmd_Change_Weapon0()
+	{
+		Change_Weapon0();
+	}
+	void Change_Weapon0()
+	{
+		weapon = 0;
+		Ani.SetFloat("Weapon", weapon);
+		Ani.SetBool("HaveWeapon", false);
+		Staff.SetActive(false);
+		Sword.SetActive(false);
+		Gun.SetActive(false);
+		Drink.SetActive(false);
+	}
+
+	void Sync_Change_Weapon1()
+	{
+		if (isServer)
+			Rpc_Change_Weapon1();
+		else
+			Cmd_Change_Weapon0();
+	}
+	[ClientRpc]
+	void Rpc_Change_Weapon1()
+	{
+		Change_Weapon1();
+	}
+	[Command]
+	void Cmd_Change_Weapon1()
+	{
+		Change_Weapon1();
+	}
+	void Change_Weapon1()
+	{
+		weapon = 1;
+		Ani.SetFloat("Weapon", weapon);
+		Ani.SetBool("HaveWeapon", true);
+		Sword.SetActive(true);
+		Staff.SetActive(false);
+		Gun.SetActive(false);
+		Drink.SetActive(false);
+	}
+
+	void Sync_Change_Weapon2()
+	{
+		if (isServer)
+			Rpc_Change_Weapon2();
+		else
+			Cmd_Change_Weapon2();
+	}
+	[ClientRpc]
+	void Rpc_Change_Weapon2()
+	{
+		Change_Weapon2();
+	}
+	[Command]
+	void Cmd_Change_Weapon2()
+	{
+		Change_Weapon2();
+	}
+	void Change_Weapon2()
+	{
+		weapon = 2;
+		Ani.SetFloat("Weapon", weapon);
+		Ani.SetBool("HaveWeapon", true);
+		Staff.SetActive(true);
+		Sword.SetActive(false);
+		Gun.SetActive(false);
+		Drink.SetActive(false);
+	}
+
+	void Sync_Change_Weapon3()
+	{
+		if (isServer)
+			Rpc_Change_Weapon3();
+		else
+			Cmd_Change_Weapon3();
+	}
+	[ClientRpc]
+	void Rpc_Change_Weapon3()
+	{
+		Change_Weapon3();
+	}
+	[Command]
+	void Cmd_Change_Weapon3()
+	{
+		Change_Weapon3();
+	}
+	void Change_Weapon3()
+	{
+		weapon = 3;
+		Ani.SetFloat("Weapon", weapon);
+		Ani.SetBool("HaveWeapon", true);
+		Staff.SetActive(false);
+		Sword.SetActive(false);
+		Gun.SetActive(true);
+		Drink.SetActive(false);
+	}
+
+	void Sync_Change_Weapon4()
+	{
+		if (isServer)
+			Rpc_Change_Weapon4();
+		else
+			Cmd_Change_Weapon4();
+	}
+	[ClientRpc]
+	void Rpc_Change_Weapon4()
+	{
+		Change_Weapon4();
+	}
+	[Command]
+	void Cmd_Change_Weapon4()
+	{
+		Change_Weapon4();
+	}
+	void Change_Weapon4()
+	{
+		weapon = 4;
+		Ani.SetFloat("Weapon", weapon);
+		Ani.SetBool("HaveWeapon", true);
+		Staff.SetActive(false);
+		Sword.SetActive(false);
+		Gun.SetActive(false);
+		Drink.SetActive(true);
+	}
+
+	void Sync_Change_Weapon5()
+	{
+		if (isServer)
+			Rpc_Change_Weapon5();
+		else
+			Cmd_Change_Weapon5();
+	}
+	[ClientRpc]
+	void Rpc_Change_Weapon5()
+	{
+		Change_Weapon5();
+	}
+	[Command]
+	void Cmd_Change_Weapon5()
+	{
+		Change_Weapon5();
+	}
+	void Change_Weapon5()
+	{
+		weapon = 5;
+		Ani.SetFloat("Weapon", weapon);
+		Ani.SetBool("HaveWeapon", true);
+		Staff.SetActive(false);
+		Sword.SetActive(false);
+		Gun.SetActive(false);
+		Drink.SetActive(false);
+	}
+	#endregion
+
+
+	void Sync_StartMove()
+	{
+		if (isServer)
+			Rpc_StartMove();
+		else
+			Cmd_StartMove();
+	}
+	[ClientRpc]
+	void Rpc_StartMove()
+	{
+		StartMove();
+	}
+	[Command]
+	void Cmd_StartMove()
+	{
+		StartMove();
+	}
+	void StartMove()
+	{
+		Ani.SetBool("Run", true);
+	}
+
+
+	void Sync_StopMove()
+	{
+		if (isServer)
+			Rpc_StopMove();
+		else
+			Cmd_StopMove();
+	}
+	[ClientRpc]
+	void Rpc_StopMove()
+	{
+		StopMove();
+	}
+	[Command]
+	void Cmd_StopMove()
+	{
+		StopMove();
+	}
+	void StopMove()
+	{
+		Ani.SetBool("Run", false);
+	}
+
+	void Sync_SwordAttack()
+	{
+		if (isServer)
+			Rpc_SwordAttack();
+		else
+			Cmd_SwordAttack();
+	}
+	[ClientRpc]
+	void Rpc_SwordAttack()
+	{
+		SwordAttack();
+	}
+	[Command]
+	void Cmd_SwordAttack()
+	{
+		SwordAttack();
+	}
+	void SwordAttack()
+	{
+		Ani.SetTrigger("Attack");
+	}
+
+	void Sync_MagicAttack(Vector3 targetPos)
+	{
+		if (isServer)
+			Rpc_MagicAttack(targetPos);
+		else
+			Cmd_MagicAttack(targetPos);
+	}
+	[ClientRpc]
+	void Rpc_MagicAttack(Vector3 targetPos)
+	{
+		MagicAttack(targetPos);
+	}
+	[Command]
+	void Cmd_MagicAttack(Vector3 targetPos)
+	{
+		MagicAttack(targetPos);
+	}
+	void MagicAttack(Vector3 targetPos)
+	{
+		Ani.SetTrigger("MagicAttack");
+		PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+		data.magicType = PrefabManager.MAGIC_TYPE.Magic01;
+		data.targetPos = targetPos;
+		GameObject obj = PrefabManager.Instance.SpawnMagic(data);
+
+		// Spawn the bullet on the Clients
+		if (isServer)
+			NetworkServer.Spawn(obj);
+	}
+
+	void Sync_DrinkMedical()
+	{
+		if (isServer)
+			Rpc_DrinkMedical();
+		else
+			Cmd_DrinkMedical();
+	}
+	[ClientRpc]
+	void Rpc_DrinkMedical()
+	{
+		DrinkMedical();
+	}
+	[Command]
+	void Cmd_DrinkMedical()
+	{
+		DrinkMedical();
+	}
+	void DrinkMedical()
+	{
+		Debug.LogError("Drink");
+		Ani.SetTrigger("Drink");
+		m_Health.currentHealth += 50;
+		if (m_Health.currentHealth > 100)
+			m_Health.currentHealth = 100;
+		Debug.LogError("Drink End");
+	}
+
+	void Sync_BulletFire()
+	{
+		if (isServer)
+			Rpc_BulletFire();
+		else
+			Cmd_BulletFire();
+	}
+	[ClientRpc]
+	void Rpc_BulletFire()
+	{
+		BulletFire();
+	}
+	[Command]
+	void Cmd_BulletFire()
+	{
+		BulletFire();
+	}
+	void BulletFire()
+	{
+		Ani.SetTrigger("GunAttack");
+		// Create the Bullet from the Bullet Prefab
+		GameObject obj = (GameObject)Instantiate(
+			bulletPrefab,
+			bulletSpawn.position,
+			bulletSpawn.rotation);
+
+		// Add velocity to the bullet
+		obj.GetComponent<Rigidbody>().velocity = obj.transform.forward * 20.0f;
+		obj.GetComponent<bullet>().playerID = (int)netId.Value;
+		obj.GetComponent<bullet>().bBoss = bBoss;
+		Physics.IgnoreCollision(obj.GetComponent<Collider>(), this.GetComponent<Collider>());
+
+		if (isServer)
+			NetworkServer.Spawn(obj);
+		// Destroy the bullet after 2 seconds
+		Destroy(obj, 2.0f);
+	}
+
+	void Sync_HealthFire()
+	{
+		if (isServer)
+			Rpc_HealthFire();
+		else
+			Cmd_HealthFire();
+	}
+	[ClientRpc]
+	void Rpc_HealthFire()
+	{
+		HealthFire();
+	}
+	[Command]
+	void Cmd_HealthFire()
+	{
+		HealthFire();
+	}
+	void HealthFire()
+	{
+		PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+		data.magicType = PrefabManager.MAGIC_TYPE.Health01;
+		data.targetPos = m_v3CurMouseHitPoint;
+		data.forward = transform.forward;
+		data.startPos = transform.position;
+
+		GameObject obj = PrefabManager.Instance.SpawnMagic(data);
+
+		if(isServer)
+			NetworkServer.Spawn(obj);
+		Destroy(obj, 2.0f);
+	}
+	#endregion
 
 	bool bJump = false;
 	float fJumpTime = 0.0f;
@@ -397,28 +767,6 @@ public class PlayerController : NetworkBehaviour
 				break;
 		}
 
-	}
-
-	[Command]
-	void CmdFire()
-	{
-		// Create the Bullet from the Bullet Prefab
-		GameObject bullet = (GameObject)Instantiate(
-			bulletPrefab,
-			bulletSpawn.position,
-			bulletSpawn.rotation);
-
-		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 20.0f;
-		bullet.GetComponent<bullet>().playerID = (int)netId.Value;
-		bullet.GetComponent<bullet>().bBoss = bBoss;
-		Physics.IgnoreCollision(bullet.GetComponent<Collider>(), this.GetComponent<Collider>());
-
-		// Spawn the bullet on the Clients
-		NetworkServer.Spawn(bullet);
-
-		// Destroy the bullet after 2 seconds
-		Destroy(bullet, 2.0f);
 	}
 
 	private void OnTriggerEnter(Collider other)

@@ -29,20 +29,35 @@ public class Magic01Controller : NetworkTransform
         {
             Debug.Log("Hit floor");
 
-            PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
-			data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
-			data.targetPos = transform.position;
+			Cmd_Explosion();
+			Cmd_Hit();
+			Destroy(gameObject);
+		}
+	}
 
-            PrefabManager.Instance.CmdSpawnMagic(data);
+	[Command]
+	void Cmd_Explosion()
+	{
+		PrefabManager.udsPrefabData data2 = new PrefabManager.udsPrefabData();
+		data2.magicType = PrefabManager.MAGIC_TYPE.Magic02;
+		data2.targetPos = transform.position;
 
-            PrefabManager.udsPrefabData data2 = new PrefabManager.udsPrefabData();
-			data2.magicType = PrefabManager.MAGIC_TYPE.Magic02;
-			data2.targetPos = transform.position;
+		CameraController.Instance.InduceStress(1.0f);
 
-            CameraController.Instance.InduceStress(1.0f);
+		GameObject obj = PrefabManager.Instance.SpawnMagic(data2);
+		if (isServer)
+			NetworkServer.Spawn(obj);
+	}
 
-            PrefabManager.Instance.CmdSpawnMagic(data2);
-            Destroy(gameObject);
-        }
-    }
+	[Command]
+	void Cmd_Hit()
+	{
+		PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
+		data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;
+		data.targetPos = transform.position;
+
+		GameObject obj = PrefabManager.Instance.SpawnMagic(data);
+		if (isServer)
+			NetworkServer.Spawn(obj);
+	}
 }

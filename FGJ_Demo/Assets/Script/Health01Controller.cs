@@ -34,7 +34,7 @@ public class Health01Controller : NetworkTransform
                 PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
                 data.magicType = PrefabManager.MAGIC_TYPE.Health02;
                 data.targetPos = transform.position;
-                PrefabManager.Instance.CmdSpawnMagic(data);
+                PrefabManager.Instance.SpawnMagic(data);
             }
 				//         PrefabManager.udsPrefabData data = new PrefabManager.udsPrefabData();
 				//data.magicType = PrefabManager.MAGIC_TYPE.Magic01Hit;

@@ -59,15 +59,14 @@ public class PrefabManager : NetworkBehaviour
             }
         }
     }
-
-	[Command]
-	public void CmdSpawnMagic(udsPrefabData v_data)
+	
+	public GameObject SpawnMagic(udsPrefabData v_data)
     {
 		GameObject temp = null;
 		switch (v_data.magicType)
         {
             case MAGIC_TYPE.Magic01:
-                if (m_bMagicCD == true) return;
+                if (m_bMagicCD == true) return null;
 				temp = (GameObject)Instantiate(m_objMagic01, v_data.targetPos + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);    
                 m_bMagicCD = true;
                 m_fMagicCDClick = 0.0f;
@@ -97,8 +96,6 @@ public class PrefabManager : NetworkBehaviour
             default:
                 break;
 		}
-
-		if(temp != null)
-			NetworkServer.Spawn(temp);
+		return temp;
 	}
 }
