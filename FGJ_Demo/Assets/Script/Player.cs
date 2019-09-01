@@ -15,16 +15,12 @@ public class Player : MonoBehaviour
     public bool IsAttack;
 
 
-    void Start()
+    void Awake()
     {
         Sword.SetActive(false);
         Staff.SetActive(false);
         Gun.SetActive(false);
         Drink.SetActive(false);
-        GameObject.Find("slot1").GetComponent<Slot>().OpenGame = true;
-        GameObject.Find("slot2").GetComponent<Slot>().OpenGame = true;
-        GameObject.Find("slot3").GetComponent<Slot>().OpenGame = true;
-        GameObject.Find("slot4").GetComponent<Slot>().OpenGame = true;
     }
 
     void Update()
