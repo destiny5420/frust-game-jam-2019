@@ -787,10 +787,10 @@ MonoBehaviour:
   weapon: 0
   running: 0
   m_mat:
-  - {fileID: 2100008, guid: a524a4dc91b30d04192dfcc31ca5b584, type: 3}
-  - {fileID: 2100002, guid: a524a4dc91b30d04192dfcc31ca5b584, type: 3}
-  - {fileID: 2100014, guid: a524a4dc91b30d04192dfcc31ca5b584, type: 3}
-  - {fileID: 2100010, guid: a524a4dc91b30d04192dfcc31ca5b584, type: 3}
+  - {fileID: 2100000, guid: 50d1dfa85587d044a8bb5a4197fbc857, type: 2}
+  - {fileID: 2100000, guid: 771a9d7d6d7859345a89c733750ffd74, type: 2}
+  - {fileID: 2100000, guid: 1bf9701d8b29939459d4ea996a642487, type: 2}
+  - {fileID: 2100000, guid: 44587a245ab712545b8c509ced691412, type: 2}
   renderer: {fileID: 7117254120322645234}
   m_Attritube: {fileID: 4261205800865773952}
 --- !u!114 &2266973193198581682
