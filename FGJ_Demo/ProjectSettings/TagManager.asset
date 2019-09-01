@@ -7,6 +7,8 @@ TagManager:
   - Floor
   - Well
   - Bullet
+  - Resoure
+  - PlayerPos
   layers:
   - Default
   - TransparentFX
