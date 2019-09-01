@@ -60,3 +60,5 @@ crashlytics-build.properties
 FGJ_Demo/obj
 FGJ_Demo/obj
 Release/
+FGJ_Demo/.vscode/
+FGJ_Demo/Logs/
