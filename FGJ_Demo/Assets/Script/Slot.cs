@@ -30,7 +30,7 @@ public class Slot : MonoBehaviour { //物品欄 右Ui開啟
     public void Cross() {
 
         foreach (Transform child in transform) {
-            child.GetComponent<Spawn>().SpawnItem();
+            child.GetComponent<Spawn>().SpawnItem();//看不懂 
             GameObject.Destroy(child.gameObject);
         }
     }
