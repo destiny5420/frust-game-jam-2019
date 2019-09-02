@@ -9,7 +9,8 @@ public class Spawn : MonoBehaviour {
 
     private void Start()
     {
-        playerPos = GameObject.FindGameObjectWithTag("PlayerPos").GetComponent<Transform>();
+        if (!playerPos  && GameObject.Find("Directional Light").GetComponent<Pla_2>().遊戲狀態 == 1)
+            playerPos = GameObject.FindGameObjectWithTag("PlayerPos").GetComponent<Transform>();
     }
 
     public void SpawnItem() {

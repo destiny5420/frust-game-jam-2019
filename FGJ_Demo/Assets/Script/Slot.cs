@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour { //物品欄 右Ui開啟
 
         }
 
-        if (OpenGame&&transform.childCount <= 0) {
+        if (transform.childCount <= 0) {
             inventory.items[index] = 0;
         }
     }
@@ -30,7 +30,7 @@ public class Slot : MonoBehaviour { //物品欄 右Ui開啟
     public void Cross() {
 
         foreach (Transform child in transform) {
-            child.GetComponent<Spawn>().SpawnItem();//看不懂 
+            child.GetComponent<Spawn>().SpawnItem();//看不懂  要改為3為座標(?
             GameObject.Destroy(child.gameObject);
         }
     }

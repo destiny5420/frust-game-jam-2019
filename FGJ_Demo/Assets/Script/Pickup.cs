@@ -25,9 +25,9 @@ public class Pickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             for (int i = 0; i < inventory.slots.Length; i++)
-                if (inventory.isFull[i] == false)
+                if (inventory.items[i] == 0)
                 { 
-                    inventory.isFull[i] = true;
+                    inventory.items[i] = 1;
                     Instantiate(itemButton, inventory.slots[i].transform, false);
                     Destroy(gameObject);
                     break; 
