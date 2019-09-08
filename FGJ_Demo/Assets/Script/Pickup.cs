@@ -21,7 +21,7 @@ public class Pickup : MonoBehaviour
      
     void OnTriggerEnter(Collider other)
     {
-        print(other.tag);
+        print(other.tag +"get the source");
         if (other.CompareTag("Player"))
         {
             for (int i = 0; i < inventory.slots.Length; i++)
